@@ -47,6 +47,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // B. KELOMPOK RUTE KOORDINATOR (YAYASAN)
     // ------------------------------------------
     Route::middleware(['role:koordinator'])->prefix('koordinator')->name('koordinator.')->group(function () {
+        Route::get('/kegiatan/create', [\App\Http\Controllers\KegiatanSosialController::class, 'create'])->name('kegiatan.create');
+        Route::post('/kegiatan', [\App\Http\Controllers\KegiatanSosialController::class, 'store'])->name('kegiatan.store');
         Route::get('/kegiatan', function () { return 'Halaman Buat & Kelola Kegiatan Acara'; })->name('kegiatan');
         Route::get('/absensi', function () { return 'Halaman Absensi Relawan di Hari H'; })->name('absensi');
         Route::get('/verifikasi-donasi', function () { return 'Halaman Cek Barang Donasi'; })->name('donasi');
