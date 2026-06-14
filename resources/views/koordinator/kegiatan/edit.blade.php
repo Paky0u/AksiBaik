@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Buat Kegiatan Sosial Baru') }}
+            {{ __('Ubah Kegiatan Sosial') }}
         </h2>
     </x-slot>
 
@@ -20,18 +20,19 @@
             <!-- Form Card -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl border border-gray-100 p-6 md:p-8">
                 <div class="border-b border-gray-100 pb-5 mb-6">
-                    <h3 class="text-xl font-bold text-gray-800">Formulir Kegiatan Sosial</h3>
-                    <p class="text-sm text-gray-500 mt-1">Lengkapi informasi di bawah ini untuk mempublikasikan program baru bagi relawan dan donatur.</p>
+                    <h3 class="text-xl font-bold text-gray-800">Ubah Informasi Kegiatan</h3>
+                    <p class="text-sm text-gray-500 mt-1">Perbarui detail agenda kegiatan sosial di bawah ini.</p>
                 </div>
 
                 <!-- Formulir Input -->
-                <form action="{{ route('koordinator.kegiatan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <form action="{{ route('koordinator.kegiatan.update', $kegiatan->id_kegiatan) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
+                    @method('PUT')
 
-                    <!-- Judul Kegiatan (150 Karakter) -->
+                    <!-- Judul Kegiatan -->
                     <div>
                         <label for="judul_kegiatan" class="block text-sm font-bold text-gray-700 mb-1">Judul Kegiatan <span class="text-rose-500">*</span></label>
-                        <input type="text" id="judul_kegiatan" name="judul_kegiatan" value="{{ old('judul_kegiatan') }}" 
+                        <input type="text" id="judul_kegiatan" name="judul_kegiatan" value="{{ old('judul_kegiatan', $kegiatan->judul_kegiatan) }}" 
                             class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('judul_kegiatan') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror"
                             placeholder="Contoh: Mengajar Anak Jalanan di Kolong Jembatan" required>
                         @error('judul_kegiatan')
@@ -45,9 +46,8 @@
                             <label for="id_kategori" class="block text-sm font-bold text-gray-700 mb-1">Kategori Kegiatan <span class="text-rose-500">*</span></label>
                             <select id="id_kategori" name="id_kategori" 
                                 class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('id_kategori') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror" required>
-                                <option value="" disabled selected>-- Pilih Kategori --</option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id_kategori }}" {{ old('id_kategori') == $category->id_kategori ? 'selected' : '' }}>
+                                    <option value="{{ $category->id_kategori }}" {{ old('id_kategori', $kegiatan->id_kategori) == $category->id_kategori ? 'selected' : '' }}>
                                         {{ $category->nama_kategori }}
                                     </option>
                                 @endforeach
@@ -60,7 +60,7 @@
                         <!-- Kuota Relawan -->
                         <div>
                             <label for="kuota_relawan" class="block text-sm font-bold text-gray-700 mb-1">Kuota Relawan (Orang) <span class="text-rose-500">*</span></label>
-                            <input type="number" id="kuota_relawan" name="kuota_relawan" value="{{ old('kuota_relawan') }}" min="1"
+                            <input type="number" id="kuota_relawan" name="kuota_relawan" value="{{ old('kuota_relawan', $kegiatan->kuota_relawan) }}" min="1"
                                 class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('kuota_relawan') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror"
                                 placeholder="Contoh: 15" required>
                             @error('kuota_relawan')
@@ -74,18 +74,18 @@
                         <label for="deskripsi" class="block text-sm font-bold text-gray-700 mb-1">Deskripsi Kegiatan <span class="text-rose-500">*</span></label>
                         <textarea id="deskripsi" name="deskripsi" rows="5"
                             class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('deskripsi') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror"
-                            placeholder="Deskripsikan agenda, sasaran, dan ketentuan kegiatan secara jelas agar relawan mudah memahaminya..." required>{{ old('deskripsi') }}</textarea>
+                            placeholder="Deskripsikan agenda, sasaran, dan ketentuan kegiatan..." required>{{ old('deskripsi', $kegiatan->deskripsi) }}</textarea>
                         @error('deskripsi')
                             <p class="text-xs text-rose-500 mt-1.5 font-semibold">{{ $message }}</p>
                         @enderror
                     </div>
 
-                    <!-- Lokasi Kegiatan (150 Karakter) -->
+                    <!-- Lokasi Kegiatan -->
                     <div>
                         <label for="lokasi" class="block text-sm font-bold text-gray-700 mb-1">Lokasi Kegiatan <span class="text-rose-500">*</span></label>
-                        <input type="text" id="lokasi" name="lokasi" value="{{ old('lokasi') }}"
+                        <input type="text" id="lokasi" name="lokasi" value="{{ old('lokasi', $kegiatan->lokasi) }}"
                             class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('lokasi') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror"
-                            placeholder="Contoh: Jl. Kemanusiaan No. 12, Grogol, Jakarta Barat" required>
+                            placeholder="Contoh: Jl. Kemanusiaan No. 12, Grogol" required>
                         @error('lokasi')
                             <p class="text-xs text-rose-500 mt-1.5 font-semibold">{{ $message }}</p>
                         @enderror
@@ -95,7 +95,7 @@
                         <!-- Tanggal Kegiatan -->
                         <div>
                             <label for="tanggal_kegiatan" class="block text-sm font-bold text-gray-700 mb-1">Tanggal Kegiatan <span class="text-rose-500">*</span></label>
-                            <input type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" value="{{ old('tanggal_kegiatan') }}"
+                            <input type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" value="{{ old('tanggal_kegiatan', $kegiatan->tanggal_kegiatan) }}"
                                 class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('tanggal_kegiatan') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror" required>
                             @error('tanggal_kegiatan')
                                 <p class="text-xs text-rose-500 mt-1.5 font-semibold">{{ $message }}</p>
@@ -105,7 +105,7 @@
                         <!-- Waktu Mulai -->
                         <div>
                             <label for="waktu_mulai" class="block text-sm font-bold text-gray-700 mb-1">Waktu Mulai <span class="text-rose-500">*</span></label>
-                            <input type="time" id="waktu_mulai" name="waktu_mulai" value="{{ old('waktu_mulai') }}"
+                            <input type="time" id="waktu_mulai" name="waktu_mulai" value="{{ old('waktu_mulai', \Carbon\Carbon::parse($kegiatan->waktu_mulai)->format('H:i')) }}"
                                 class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('waktu_mulai') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror" required>
                             @error('waktu_mulai')
                                 <p class="text-xs text-rose-500 mt-1.5 font-semibold">{{ $message }}</p>
@@ -115,7 +115,7 @@
                         <!-- Waktu Selesai -->
                         <div>
                             <label for="waktu_selesai" class="block text-sm font-bold text-gray-700 mb-1">Waktu Selesai <span class="text-rose-500">*</span></label>
-                            <input type="time" id="waktu_selesai" name="waktu_selesai" value="{{ old('waktu_selesai') }}"
+                            <input type="time" id="waktu_selesai" name="waktu_selesai" value="{{ old('waktu_selesai', \Carbon\Carbon::parse($kegiatan->waktu_selesai)->format('H:i')) }}"
                                 class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('waktu_selesai') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror" required>
                             @error('waktu_selesai')
                                 <p class="text-xs text-rose-500 mt-1.5 font-semibold">{{ $message }}</p>
@@ -124,10 +124,10 @@
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Target Donasi (Opsional) -->
+                        <!-- Target Donasi -->
                         <div>
                             <label for="target_donasi" class="block text-sm font-bold text-gray-700 mb-1">Target Donasi Dana (Rp) <span class="text-xs text-gray-400 font-normal">(Opsional)</span></label>
-                            <input type="number" id="target_donasi" name="target_donasi" value="{{ old('target_donasi') }}" min="0" step="1000"
+                            <input type="number" id="target_donasi" name="target_donasi" value="{{ old('target_donasi', $kegiatan->target_donasi) }}" min="0" step="1000"
                                 class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('target_donasi') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror"
                                 placeholder="Contoh: 10000000">
                             @error('target_donasi')
@@ -135,14 +135,45 @@
                             @enderror
                         </div>
 
-                        <!-- Poster Kegiatan (Opsional) -->
+                        <!-- Status Kegiatan -->
                         <div>
-                            <label for="poster_donasi" class="block text-sm font-bold text-gray-700 mb-1">Upload Poster Kegiatan <span class="text-xs text-gray-400 font-normal">(Opsional, max 2MB)</span></label>
+                            <label for="status_kegiatan" class="block text-sm font-bold text-gray-700 mb-1">Status Kegiatan <span class="text-rose-500">*</span></label>
+                            <select id="status_kegiatan" name="status_kegiatan" 
+                                class="w-full px-4 py-2.5 border rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition duration-150 @error('status_kegiatan') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @else border-gray-300 @enderror" required>
+                                <option value="Aktif" {{ old('status_kegiatan', $kegiatan->status_kegiatan) === 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                                <option value="Selesai" {{ old('status_kegiatan', $kegiatan->status_kegiatan) === 'Selesai' ? 'selected' : '' }}>Selesai</option>
+                                <option value="Dibatalkan" {{ old('status_kegiatan', $kegiatan->status_kegiatan) === 'Dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                            </select>
+                            @error('status_kegiatan')
+                                <p class="text-xs text-rose-500 mt-1.5 font-semibold">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Poster Upload & Preview -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <label for="poster_donasi" class="block text-sm font-bold text-gray-700 mb-1">Ganti Poster Kegiatan <span class="text-xs text-gray-400 font-normal">(Opsional, max 2MB)</span></label>
                             <input type="file" id="poster_donasi" name="poster_donasi"
                                 class="w-full text-sm text-gray-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-[#4379F2] hover:file:bg-blue-100 border border-gray-300 rounded-xl cursor-pointer p-1 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 transition duration-150 @error('poster_donasi') border-rose-400 focus:ring-rose-200 focus:border-rose-400 @enderror">
                             @error('poster_donasi')
                                 <p class="text-xs text-rose-500 mt-1.5 font-semibold">{{ $message }}</p>
                             @enderror
+                        </div>
+
+                        <!-- Preview Poster saat ini -->
+                        <div>
+                            @if ($kegiatan->poster_donasi)
+                                <div class="p-3 bg-gray-50 border border-gray-100 rounded-xl inline-flex items-center gap-3">
+                                    <img src="{{ asset('storage/' . $kegiatan->poster_donasi) }}" alt="Poster Kegiatan" class="w-12 h-16 object-cover rounded-lg shadow-sm">
+                                    <div>
+                                        <span class="text-xs font-bold text-gray-600 block">Poster Saat Ini:</span>
+                                        <span class="text-[10px] text-gray-400 block max-w-[150px] truncate">{{ basename($kegiatan->poster_donasi) }}</span>
+                                    </div>
+                                </div>
+                            @else
+                                <span class="text-xs text-gray-400 italic">Belum ada poster terupload.</span>
+                            @endif
                         </div>
                     </div>
 
@@ -151,9 +182,8 @@
                         <a href="{{ route('koordinator.kegiatan.index') }}" class="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold rounded-xl transition duration-150">
                             Batal
                         </a>
-                        <!-- Submit Button warna #4379F2 -->
                         <button type="submit" class="px-8 py-2.5 bg-[#4379F2] hover:bg-blue-700 text-white text-sm font-bold rounded-xl shadow-md hover:shadow-lg transition duration-150 transform hover:-translate-y-0.5">
-                            Simpan & Publikasikan
+                            Simpan Perubahan
                         </button>
                     </div>
                 </form>

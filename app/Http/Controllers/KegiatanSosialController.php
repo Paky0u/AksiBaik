@@ -9,6 +9,20 @@ use Illuminate\Http\Request;
 class KegiatanSosialController extends Controller
 {
     /**
+     * Tampilkan daftar kegiatan milik koordinator yang login.
+     */
+    public function index()
+    {
+        // Ambil data kegiatan khusus milik koordinator yang sedang login
+        $kegiatans = KegiatanSosial::where('id_pengguna', auth()->id())
+                                    ->with('kategori') // Eager loading untuk memanggil nama kategori
+                                    ->latest()
+                                    ->get();
+
+        return view('koordinator.kegiatan.index', compact('kegiatans'));
+    }
+
+    /**
      * Tampilkan formulir pembuatan kegiatan sosial baru.
      */
     public function create()
@@ -70,7 +84,86 @@ class KegiatanSosialController extends Controller
         // 4. Masukkan data ke database
         KegiatanSosial::create($validatedData);
 
-        // 5. Kembalikan respons sukses ke halaman dashboard dengan pesan alert
-        return redirect()->route('dashboard')->with('success', 'Kegiatan sosial baru berhasil dibuat dan dipublikasikan!');
+        // 5. Kembalikan respons sukses ke halaman index kegiatan
+        return redirect()->route('koordinator.kegiatan.index')->with('success', 'Kegiatan sosial baru berhasil dibuat dan dipublikasikan!');
+    }
+
+    /**
+     * Tampilkan form edit kegiatan sosial.
+     */
+    public function edit($id)
+    {
+        $kegiatan = KegiatanSosial::where('id_kegiatan', $id)->where('id_pengguna', auth()->id())->firstOrFail();
+        $categories = KategoriKegiatan::orderBy('nama_kategori', 'asc')->get();
+        return view('koordinator.kegiatan.edit', compact('kegiatan', 'categories'));
+    }
+
+    /**
+     * Update data kegiatan sosial di database.
+     */
+    public function update(Request $request, $id)
+    {
+        $kegiatan = KegiatanSosial::where('id_kegiatan', $id)->where('id_pengguna', auth()->id())->firstOrFail();
+
+        // Keamanan: Pastikan hanya pembuat kegiatan yang bisa meng-update
+        if ($kegiatan->id_pengguna !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki hak akses untuk memperbarui kegiatan ini.');
+        }
+
+        // 1. Validasi Input Data Form
+        $validatedData = $request->validate([
+            'judul_kegiatan' => 'required|string|max:150',
+            'id_kategori' => 'required|exists:kategori_kegiatans,id_kategori',
+            'judul_kegiatan' => 'required|string|max:150',
+            'deskripsi' => 'required|string',
+            'lokasi' => 'required|string|max:150',
+            'tanggal_kegiatan' => 'required|date',
+            'waktu_mulai' => 'required',
+            'waktu_selesai' => 'required',
+            'kuota_relawan' => 'required|integer|min:1',
+            'target_donasi' => 'nullable|numeric|min:0',
+            'poster_donasi' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status_kegiatan' => 'required|in:Aktif,Selesai,Dibatalkan',
+        ], [
+            'id_kategori.required' => 'Kategori kegiatan wajib dipilih.',
+            'id_kategori.exists' => 'Kategori kegiatan tidak valid.',
+            'judul_kegiatan.required' => 'Judul kegiatan wajib diisi.',
+            'judul_kegiatan.max' => 'Judul kegiatan maksimal 150 karakter.',
+            'deskripsi.required' => 'Deskripsi kegiatan wajib diisi.',
+            'lokasi.required' => 'Lokasi kegiatan wajib diisi.',
+            'lokasi.max' => 'Lokasi kegiatan maksimal 150 karakter.',
+            'tanggal_kegiatan.required' => 'Tanggal kegiatan wajib diisi.',
+            'waktu_mulai.required' => 'Waktu mulai wajib diisi.',
+            'waktu_selesai.required' => 'Waktu selesai wajib diisi.',
+            'kuota_relawan.required' => 'Kuota relawan wajib diisi.',
+            'kuota_relawan.min' => 'Kuota relawan minimal 1 orang.',
+            'target_donasi.numeric' => 'Target donasi harus berupa angka.',
+            'target_donasi.min' => 'Target donasi tidak boleh kurang dari 0.',
+            'poster_donasi.image' => 'Poster harus berupa file gambar.',
+            'poster_donasi.max' => 'Ukuran gambar poster maksimal 2MB.',
+            'status_kegiatan.required' => 'Status kegiatan wajib dipilih.',
+            'status_kegiatan.in' => 'Status kegiatan tidak valid.',
+        ]);
+
+        // 2. Proses upload file poster baru jika ada
+        if ($request->hasFile('poster_donasi')) {
+            $path = $request->file('poster_donasi')->store('posters', 'public');
+            $validatedData['poster_donasi'] = $path;
+        }
+
+        // 3. Update data di database
+        $kegiatan->update($validatedData);
+        return redirect()->route('koordinator.kegiatan.index')->with('success', 'Kegiatan berhasil diperbarui!');
+    }
+
+    /**
+     * Hapus kegiatan sosial dari database.
+     */
+    public function destroy($id)
+    {
+        $kegiatan = KegiatanSosial::where('id_kegiatan', $id)->where('id_pengguna', auth()->id())->firstOrFail();
+        $kegiatan->delete();
+        
+        return redirect()->route('koordinator.kegiatan.index')->with('success', 'Kegiatan berhasil dihapus!');
     }
 }

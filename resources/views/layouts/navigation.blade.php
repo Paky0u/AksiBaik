@@ -15,6 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if(Auth::user()->role === 'koordinator')
+                        <x-nav-link :href="route('koordinator.kegiatan.index')" :active="request()->routeIs('koordinator.kegiatan.*')">
+                            {{ __('Kelola Kegiatan') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -70,6 +75,11 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if(Auth::user()->role === 'koordinator')
+                <x-responsive-nav-link :href="route('koordinator.kegiatan.index')" :active="request()->routeIs('koordinator.kegiatan.*')">
+                    {{ __('Kelola Kegiatan') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

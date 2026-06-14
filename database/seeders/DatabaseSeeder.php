@@ -27,35 +27,10 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // 2. Seed KategoriKegiatan jika kosong
-        if (KategoriKegiatan::count() === 0) {
-            $categories = [
-                [
-                    'nama_kategori' => 'Pendidikan',
-                    'deskripsi' => 'Kegiatan pengajaran dan peningkatan kapasitas ilmu pengetahuan anak-anak.',
-                ],
-                [
-                    'nama_kategori' => 'Kesehatan',
-                    'deskripsi' => 'Kegiatan pelayanan medis, posyandu, pencegahan penyakit, dan penyuluhan kesehatan.',
-                ],
-                [
-                    'nama_kategori' => 'Bencana Alam',
-                    'deskripsi' => 'Penyaluran logistik, evakuasi, dan bantuan darurat bagi wilayah terdampak bencana.',
-                ],
-                [
-                    'nama_kategori' => 'Lingkungan',
-                    'deskripsi' => 'Aksi penanaman pohon, pembersihan pesisir, kampanye pelestarian alam, dan pengelolaan sampah.',
-                ],
-                [
-                    'nama_kategori' => 'Sosial & Kemanusiaan',
-                    'deskripsi' => 'Kunjungan panti asuhan, pembagian sembako untuk kaum dhuafa, dan pendampingan sosial.',
-                ],
-            ];
-
-            foreach ($categories as $cat) {
-                KategoriKegiatan::create($cat);
-            }
-        }
+        // 2. Seed KategoriKegiatan dengan memanggil KategoriKegiatanSeeder
+        $this->call([
+            KategoriKegiatanSeeder::class,
+        ]);
 
         // Ambil kategori untuk referensi seeding kegiatan
         $kategoriPendidikan = KategoriKegiatan::where('nama_kategori', 'Pendidikan')->first();

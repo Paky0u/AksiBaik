@@ -47,9 +47,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // B. KELOMPOK RUTE KOORDINATOR (YAYASAN)
     // ------------------------------------------
     Route::middleware(['role:koordinator'])->prefix('koordinator')->name('koordinator.')->group(function () {
+        
+        // Rute CRUD Kegiatan Sosial (Lengkap)
+        Route::get('/kegiatan', [\App\Http\Controllers\KegiatanSosialController::class, 'index'])->name('kegiatan.index');
         Route::get('/kegiatan/create', [\App\Http\Controllers\KegiatanSosialController::class, 'create'])->name('kegiatan.create');
         Route::post('/kegiatan', [\App\Http\Controllers\KegiatanSosialController::class, 'store'])->name('kegiatan.store');
-        Route::get('/kegiatan', function () { return 'Halaman Buat & Kelola Kegiatan Acara'; })->name('kegiatan');
+        Route::get('/kegiatan/{id}/edit', [\App\Http\Controllers\KegiatanSosialController::class, 'edit'])->name('kegiatan.edit');
+        Route::put('/kegiatan/{id}', [\App\Http\Controllers\KegiatanSosialController::class, 'update'])->name('kegiatan.update');
+        Route::delete('/kegiatan/{id}', [\App\Http\Controllers\KegiatanSosialController::class, 'destroy'])->name('kegiatan.destroy');
+
         Route::get('/absensi', function () { return 'Halaman Absensi Relawan di Hari H'; })->name('absensi');
         Route::get('/verifikasi-donasi', function () { return 'Halaman Cek Barang Donasi'; })->name('donasi');
     });
