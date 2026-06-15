@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Route;
 // ==========================================
 // 1. RUTE PUBLIK (Bisa diakses tanpa login)
 // ==========================================
-Route::get('/', function () {
-    return view('welcome'); // Halaman Landing Page AksiBaik
-})->name('home');
+Route::get('/', [\App\Http\Controllers\PublicController::class, 'index'])->name('home');
 
 Route::get('/kegiatan', function () {
     return 'Ini halaman daftar kegiatan untuk publik/tamu';
 })->name('kegiatan.publik');
+
+Route::get('/kegiatan/{id}', [\App\Http\Controllers\PublicController::class, 'show'])->name('kegiatan.show');
 
 Route::get('/donasi', function () {
     return 'Ini halaman form donasi untuk publik/tamu';
@@ -56,7 +56,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/kegiatan/{id}', [\App\Http\Controllers\KegiatanSosialController::class, 'update'])->name('kegiatan.update');
         Route::delete('/kegiatan/{id}', [\App\Http\Controllers\KegiatanSosialController::class, 'destroy'])->name('kegiatan.destroy');
 
-        Route::get('/absensi', function () { return 'Halaman Absensi Relawan di Hari H'; })->name('absensi');
+        Route::get('/absensi', [\App\Http\Controllers\ManajemenRelawanController::class, 'index'])->name('absensi.index');
+        Route::put('/absensi/{id}', [\App\Http\Controllers\ManajemenRelawanController::class, 'updateStatus'])->name('absensi.update');
+        
         Route::get('/verifikasi-donasi', function () { return 'Halaman Cek Barang Donasi'; })->name('donasi');
     });
 
@@ -67,6 +69,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/riwayat-kegiatan', function () { return 'Halaman Riwayat Acara Saya'; })->name('riwayat');
         Route::get('/sertifikat', function () { return 'Halaman Unduh Sertifikat'; })->name('sertifikat');
         Route::get('/feedback', function () { return 'Halaman Beri Penilaian'; })->name('feedback');
+        
+        // Rute Pendaftaran Relawan
+        Route::post('/daftar/{id_kegiatan}', [\App\Http\Controllers\PendaftaranRelawanController::class, 'store'])->name('daftar');
     });
 
 });

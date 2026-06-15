@@ -35,12 +35,12 @@ class DashboardController extends Controller
             return view('koordinator.dashboard', compact('kegiatanSosials'));
         } else {
             // Mengambil riwayat pendaftaran kegiatan milik relawan yang login
-            $riwayatKegiatan = PendaftaranRelawan::where('id_pengguna', auth()->id())
+            $riwayats = PendaftaranRelawan::where('id_pengguna', auth()->id())
                 ->with(['kegiatanSosial.kategori', 'kegiatanSosial.koordinator'])
                 ->orderBy('id_pendaftaran', 'desc')
                 ->get();
 
-            return view('relawan.dashboard', compact('riwayatKegiatan'));
+            return view('relawan.dashboard', compact('riwayats'));
         }
     }
 }

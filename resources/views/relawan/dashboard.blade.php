@@ -1,136 +1,102 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Riwayat Kegiatan Saya') }}
+            {{ __('Dasbor Relawan') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Profil Singkat Relawan -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl border-b border-gray-200 mb-8 p-6 md:p-8">
-                <div class="flex flex-col md:flex-row items-center gap-6">
-                    <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-[#4379F2] text-2xl font-bold uppercase border-2 border-[#4379F2]">
-                        {{ substr(Auth::user()->name, 0, 2) }}
-                    </div>
-                    <div class="text-center md:text-left">
-                        <h1 class="text-2xl md:text-3xl font-extrabold text-[#117554]">
-                            Halo, {{ Auth::user()->name }}!
-                        </h1>
-                        <p class="text-gray-600 mt-1 text-sm md:text-base">
-                            Terima kasih atas kepedulian Anda. Di sini Anda dapat memantau riwayat program kemanusiaan yang Anda ikuti.
-                        </p>
-                    </div>
+    <div class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        
+        @if (session('success'))
+            <div class="mb-6 p-4 bg-emerald-50 border-l-4 border-[#6EC207] text-[#117554] rounded-r-xl shadow-sm flex items-start gap-3">
+                <svg class="w-6 h-6 shrink-0 text-[#6EC207]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div>
+                    <span class="font-bold">Berhasil!</span>
+                    <p class="text-sm mt-0.5">{{ session('success') }}</p>
                 </div>
             </div>
+        @endif
 
-            <!-- Grid Card - Mobile First (1 Col on mobile, 3 Col on PC) -->
-            <div class="mb-6 flex justify-between items-center">
-                <h3 class="text-lg font-bold text-gray-800">Kegiatan Diikuti</h3>
-                <span class="text-xs text-gray-500 bg-white shadow-sm border border-gray-100 px-3 py-1 rounded-full">
-                    Total Partisipasi: {{ $riwayatKegiatan->count() }} Kegiatan
-                </span>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 mb-8">
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Riwayat Acara Saya</h3>
+            <p class="text-gray-500 text-sm">Lacak status pendaftaran dan kehadiran Anda pada kegiatan-kegiatan AksiBaik.</p>
+        </div>
+
+        @if($riwayats->isEmpty())
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
+                <div class="w-20 h-20 bg-blue-50 text-[#4379F2] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v16m8-8H4"></path></svg>
+                </div>
+                <h4 class="text-lg font-bold text-gray-800 mb-2">Belum Ada Riwayat Kegiatan</h4>
+                <p class="text-gray-500 text-sm mb-6 max-w-md mx-auto">Anda belum mendaftar di kegiatan sosial apapun. Temukan kegiatan yang sesuai dengan minat Anda dan mulailah berkontribusi!</p>
+                <a href="{{ route('home') }}" class="inline-block px-6 py-3 bg-[#4379F2] text-white font-bold rounded-xl shadow-md hover:bg-blue-700 transition">Cari Kegiatan</a>
             </div>
+        @else
+            <!-- Grid Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($riwayats as $riwayat)
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition flex flex-col h-full relative group">
+                        
+                        <!-- Poster Mini / Header Card -->
+                        <div class="h-32 bg-gray-200 relative overflow-hidden">
+                            @if($riwayat->kegiatanSosial->poster_donasi)
+                                <img src="{{ asset('storage/' . $riwayat->kegiatanSosial->poster_donasi) }}" alt="Poster" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition duration-500">
+                            @else
+                                <div class="w-full h-full bg-[#4379F2] opacity-80"></div>
+                            @endif
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            
+                            <div class="absolute bottom-3 left-4 right-4">
+                                <h4 class="text-white font-bold text-lg leading-tight line-clamp-1 drop-shadow-md">{{ $riwayat->kegiatanSosial->judul_kegiatan }}</h4>
+                            </div>
+                        </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                @forelse ($riwayatKegiatan as $riwayat)
-                    @php
-                        $kegiatan = $riwayat->kegiatanSosial;
-                    @endphp
-                    @if ($kegiatan)
-                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between">
-                            <div class="p-6">
-                                <!-- Kategori Badge -->
-                                <div class="flex items-center justify-between mb-4">
-                                    <span class="px-2.5 py-1 bg-blue-50 text-[#4379F2] text-xs font-bold rounded-md">
-                                        {{ $kegiatan->kategori->nama_kategori ?? 'Umum' }}
-                                    </span>
-                                    <span class="text-xs text-gray-400">
-                                        Reg: {{ \Carbon\Carbon::parse($riwayat->tanggal_pendaftaran)->translatedFormat('d M Y') }}
-                                    </span>
+                        <!-- Content -->
+                        <div class="p-5 flex-grow flex flex-col">
+                            <div class="mb-4">
+                                <p class="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Pelaksanaan</p>
+                                <div class="flex items-center text-sm text-gray-700 gap-2 mb-1">
+                                    <svg class="w-4 h-4 text-[#4379F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    {{ \Carbon\Carbon::parse($riwayat->kegiatanSosial->tanggal_kegiatan)->translatedFormat('d M Y') }}
                                 </div>
-
-                                <!-- Judul Kegiatan -->
-                                <h4 class="font-extrabold text-gray-800 text-lg leading-snug mb-3 hover:text-[#4379F2] transition-colors">
-                                    {{ $kegiatan->judul_kegiatan }}
-                                </h4>
-
-                                <!-- Info Koordinator, Lokasi, dan Tanggal -->
-                                <div class="space-y-2 text-xs text-gray-600 mb-5">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                                        <span>Penyelenggara: <span class="font-semibold">{{ $kegiatan->koordinator->name ?? 'Yayasan' }}</span></span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                        <span>{{ Str::limit($kegiatan->lokasi, 35) }}</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                        <span>{{ \Carbon\Carbon::parse($kegiatan->tanggal_kegiatan)->translatedFormat('d M Y') }}</span>
-                                    </div>
+                                <div class="flex items-center text-sm text-gray-700 gap-2 line-clamp-1">
+                                    <svg class="w-4 h-4 text-[#4379F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                                    {{ $riwayat->kegiatanSosial->lokasi }}
                                 </div>
+                            </div>
 
-                                <!-- Status Pendaftaran -->
-                                <div class="border-t border-gray-50 pt-4 flex flex-col gap-2">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs text-gray-500 font-medium">Status Pendaftaran:</span>
-                                        @if ($riwayat->status_pendaftaran === 'Approved')
-                                            <span class="inline-flex items-center px-2 py-0.5 bg-emerald-50 text-[#117554] text-xs font-bold rounded-full border border-emerald-100">
-                                                Disetujui
-                                            </span>
-                                        @elseif ($riwayat->status_pendaftaran === 'Pending')
-                                            <span class="inline-flex items-center px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded-full border border-amber-100">
-                                                Menunggu
-                                            </span>
+                            <div class="border-t border-gray-100 pt-4 mt-auto">
+                                <div class="flex items-center justify-between gap-2">
+                                    <div class="flex-1">
+                                        <p class="text-[10px] text-gray-400 uppercase font-bold mb-1">Status Pendaftaran</p>
+                                        @if($riwayat->status_pendaftaran == 'Pending')
+                                            <span class="inline-flex px-2.5 py-1 bg-[#FFEB00] text-yellow-800 text-xs font-bold rounded-md w-full justify-center shadow-sm">Pending</span>
+                                        @elseif($riwayat->status_pendaftaran == 'Approved')
+                                            <span class="inline-flex px-2.5 py-1 bg-[#6EC207] text-white text-xs font-bold rounded-md w-full justify-center shadow-sm">Disetujui</span>
                                         @else
-                                            <span class="inline-flex items-center px-2 py-0.5 bg-rose-50 text-rose-700 text-xs font-bold rounded-full border border-rose-100">
-                                                Ditolak
-                                            </span>
+                                            <span class="inline-flex px-2.5 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-md w-full justify-center shadow-sm">Ditolak</span>
                                         @endif
                                     </div>
-
-                                    <!-- Status Kehadiran -->
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-xs text-gray-500 font-medium">Kehadiran:</span>
-                                        @if ($riwayat->status_kehadiran === 'Hadir')
-                                            <span class="inline-flex items-center px-2 py-0.5 bg-emerald-100 text-[#117554] text-xs font-bold rounded-full">
-                                                Hadir
-                                            </span>
-                                        @elseif ($riwayat->status_kehadiran === 'Tidak Hadir')
-                                            <span class="inline-flex items-center px-2 py-0.5 bg-rose-100 text-rose-800 text-xs font-bold rounded-full">
-                                                Tidak Hadir
-                                            </span>
+                                    <div class="flex-1">
+                                        <p class="text-[10px] text-gray-400 uppercase font-bold mb-1">Status Kehadiran</p>
+                                        @if($riwayat->status_kehadiran == 'Belum Dikonfirmasi')
+                                            <span class="inline-flex px-2.5 py-1 bg-gray-100 text-gray-600 text-xs font-bold rounded-md w-full justify-center border border-gray-200">Belum Ada</span>
+                                        @elseif($riwayat->status_kehadiran == 'Hadir')
+                                            <span class="inline-flex px-2.5 py-1 bg-[#117554] text-white text-xs font-bold rounded-md w-full justify-center shadow-sm">Hadir</span>
                                         @else
-                                            <span class="inline-flex items-center px-2 py-0.5 bg-gray-100 text-gray-600 text-xs font-bold rounded-full">
-                                                Belum Absen
-                                            </span>
+                                            <span class="inline-flex px-2.5 py-1 bg-rose-500 text-white text-xs font-bold rounded-md w-full justify-center shadow-sm">Tidak Hadir</span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Catatan Admin jika ada -->
-                            @if ($riwayat->catatan_admin)
-                                <div class="bg-gray-50/70 p-4 border-t border-gray-100 text-xs text-gray-600 italic">
-                                    <span class="font-semibold not-italic block text-gray-700 mb-0.5">Catatan Koordinasi:</span>
-                                    "{{ $riwayat->catatan_admin }}"
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-                @empty
-                    <div class="col-span-1 md:col-span-3 text-center py-16 bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-                        <div class="p-4 bg-gray-50 text-gray-400 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                        </div>
-                        <h4 class="font-bold text-gray-700 text-lg">Belum Ada Riwayat Kegiatan</h4>
-                        <p class="text-gray-500 text-sm mt-1 max-w-md mx-auto">
-                            Anda belum terdaftar pada kegiatan sosial manapun. Silakan jelajahi kegiatan yang dibuka oleh yayasan untuk mulai berkontribusi.
-                        </p>
+                        <!-- Optional: Link detail kegiatan -->
+                        <a href="{{ route('kegiatan.show', $riwayat->id_kegiatan) }}" class="absolute inset-0 z-10" aria-label="Lihat detail"></a>
                     </div>
-                @endforelse
+                @endforeach
             </div>
-        </div>
+        @endif
     </div>
 </x-app-layout>
