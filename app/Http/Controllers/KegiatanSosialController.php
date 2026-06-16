@@ -73,6 +73,7 @@ class KegiatanSosialController extends Controller
         // 2. Hubungkan kegiatan dengan Koordinator yang sedang login
         $validatedData['id_pengguna'] = auth()->id();
         $validatedData['status_kegiatan'] = 'Aktif';
+        $validatedData['status_persetujuan'] = 'Menunggu';
 
         // 3. Proses upload file gambar poster jika ada
         if ($request->hasFile('poster_donasi')) {
@@ -152,8 +153,9 @@ class KegiatanSosialController extends Controller
         }
 
         // 3. Update data di database
+        $validatedData['status_persetujuan'] = 'Menunggu';
         $kegiatan->update($validatedData);
-        return redirect()->route('koordinator.kegiatan.index')->with('success', 'Kegiatan berhasil diperbarui!');
+        return redirect()->route('koordinator.kegiatan.index')->with('success', 'Kegiatan berhasil diperbarui dan dikirim ulang untuk persetujuan admin!');
     }
 
     /**

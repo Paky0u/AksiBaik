@@ -23,6 +23,7 @@ class KegiatanSosial extends Model
         'target_donasi',
         'poster_donasi',
         'status_kegiatan',
+        'status_persetujuan',
     ];
 
     /**

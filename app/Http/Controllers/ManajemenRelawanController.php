@@ -22,7 +22,8 @@ class ManajemenRelawanController extends Controller
         })
         ->with(['relawan', 'kegiatanSosial']) // Eager load relasi relawan dan kegiatannya
         ->orderBy('id_pendaftaran', 'desc')
-        ->get();
+        ->get()
+        ->groupBy('id_kegiatan');
 
         return view('koordinator.absensi.index', compact('pendaftarans'));
     }

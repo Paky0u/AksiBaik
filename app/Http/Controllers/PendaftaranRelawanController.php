@@ -40,4 +40,19 @@ class PendaftaranRelawanController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Berhasil mendaftar! Menunggu persetujuan koordinator.');
     }
+
+    /**
+     * Menampilkan sertifikat relawan jika status kehadiran adalah 'Hadir'.
+     */
+    public function sertifikat($id_pendaftaran)
+    {
+        $pendaftaran = PendaftaranRelawan::with(['kegiatanSosial.kategori', 'relawan'])->findOrFail($id_pendaftaran);
+
+        // Hanya relawan yang login dan berstatus Hadir yang bisa akses
+        if ($pendaftaran->id_pengguna !== auth()->id() || $pendaftaran->status_kehadiran !== 'Hadir') {
+            return redirect()->route('dashboard')->with('error', 'Sertifikat tidak tersedia atau Anda tidak memiliki akses.');
+        }
+
+        return view('relawan.sertifikat', compact('pendaftaran'));
+    }
 }

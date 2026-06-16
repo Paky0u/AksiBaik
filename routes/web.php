@@ -14,9 +14,8 @@ Route::get('/kegiatan', function () {
 
 Route::get('/kegiatan/{id}', [\App\Http\Controllers\PublicController::class, 'show'])->name('kegiatan.show');
 
-Route::get('/donasi', function () {
-    return 'Ini halaman form donasi untuk publik/tamu';
-})->name('donasi.publik');
+Route::get('/kegiatan/{id}/donasi', [\App\Http\Controllers\DonasiController::class, 'create'])->name('donasi.create');
+Route::post('/kegiatan/{id}/donasi', [\App\Http\Controllers\DonasiController::class, 'store'])->name('donasi.store');
 
 
 // ==========================================
@@ -38,9 +37,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // A. KELOMPOK RUTE ADMIN
     // ------------------------------------------
     Route::middleware(['role:admin'])->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/kategori', function () { return 'Halaman Kelola Kategori (Khusus Admin)'; })->name('kategori');
-        Route::get('/pengguna', function () { return 'Halaman Kelola Pengguna (Khusus Admin)'; })->name('pengguna');
-        Route::get('/verifikasi-kegiatan', function () { return 'Halaman Approval Kegiatan'; })->name('verifikasi.kegiatan');
+        Route::resource('kategori', \App\Http\Controllers\Admin\KategoriKegiatanController::class)->except(['show']);
+        Route::resource('pengguna', \App\Http\Controllers\Admin\PenggunaController::class)->except(['show', 'create', 'store']);
+        Route::get('/verifikasi-kegiatan', [\App\Http\Controllers\Admin\VerifikasiKegiatanController::class, 'index'])->name('verifikasi.kegiatan.index');
+        Route::put('/verifikasi-kegiatan/{id}', [\App\Http\Controllers\Admin\VerifikasiKegiatanController::class, 'updateStatus'])->name('verifikasi.kegiatan.update');
     });
 
     // ------------------------------------------
@@ -59,7 +59,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/absensi', [\App\Http\Controllers\ManajemenRelawanController::class, 'index'])->name('absensi.index');
         Route::put('/absensi/{id}', [\App\Http\Controllers\ManajemenRelawanController::class, 'updateStatus'])->name('absensi.update');
         
-        Route::get('/verifikasi-donasi', function () { return 'Halaman Cek Barang Donasi'; })->name('donasi');
+        Route::get('/verifikasi-donasi', [\App\Http\Controllers\Koordinator\VerifikasiDonasiController::class, 'index'])->name('donasi.index');
+        Route::put('/verifikasi-donasi/{id}', [\App\Http\Controllers\Koordinator\VerifikasiDonasiController::class, 'updateStatus'])->name('donasi.update');
     });
 
     // ------------------------------------------
@@ -67,7 +68,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // ------------------------------------------
     Route::middleware(['role:relawan'])->prefix('relawan')->name('relawan.')->group(function () {
         Route::get('/riwayat-kegiatan', function () { return 'Halaman Riwayat Acara Saya'; })->name('riwayat');
-        Route::get('/sertifikat', function () { return 'Halaman Unduh Sertifikat'; })->name('sertifikat');
+        Route::get('/sertifikat/{id_pendaftaran}', [\App\Http\Controllers\PendaftaranRelawanController::class, 'sertifikat'])->name('sertifikat');
         Route::get('/feedback', function () { return 'Halaman Beri Penilaian'; })->name('feedback');
         
         // Rute Pendaftaran Relawan

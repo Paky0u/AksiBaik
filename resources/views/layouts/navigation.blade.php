@@ -19,6 +19,23 @@
                         <x-nav-link :href="route('koordinator.kegiatan.index')" :active="request()->routeIs('koordinator.kegiatan.*')">
                             {{ __('Kelola Kegiatan') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('koordinator.absensi.index')" :active="request()->routeIs('koordinator.absensi.*')">
+                            {{ __('Verifikasi & Absensi') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('koordinator.donasi.index')" :active="request()->routeIs('koordinator.donasi.*')">
+                            {{ __('Verifikasi Donasi') }}
+                        </x-nav-link>
+                    @endif
+                    @if(Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.kategori.index')" :active="request()->routeIs('admin.kategori.*')">
+                            {{ __('Kelola Kategori') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.pengguna.index')" :active="request()->routeIs('admin.pengguna.*')">
+                            {{ __('Kelola Pengguna') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.verifikasi.kegiatan.index')" :active="request()->routeIs('admin.verifikasi.kegiatan.*')">
+                            {{ __('Persetujuan Kegiatan') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -78,6 +95,23 @@
             @if(Auth::user()->role === 'koordinator')
                 <x-responsive-nav-link :href="route('koordinator.kegiatan.index')" :active="request()->routeIs('koordinator.kegiatan.*')">
                     {{ __('Kelola Kegiatan') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('koordinator.absensi.index')" :active="request()->routeIs('koordinator.absensi.*')">
+                    {{ __('Verifikasi & Absensi') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('koordinator.donasi.index')" :active="request()->routeIs('koordinator.donasi.*')">
+                    {{ __('Verifikasi Donasi') }}
+                </x-responsive-nav-link>
+            @endif
+            @if(Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.kategori.index')" :active="request()->routeIs('admin.kategori.*')">
+                    {{ __('Kelola Kategori') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.pengguna.index')" :active="request()->routeIs('admin.pengguna.*')">
+                    {{ __('Kelola Pengguna') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.verifikasi.kegiatan.index')" :active="request()->routeIs('admin.verifikasi.kegiatan.*')">
+                    {{ __('Persetujuan Kegiatan') }}
                 </x-responsive-nav-link>
             @endif
         </div>

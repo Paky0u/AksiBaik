@@ -12,9 +12,10 @@ class PublicController extends Controller
      */
     public function index()
     {
-        $kegiatans = KegiatanSosial::with('kategori')
+        $kegiatans = KegiatanSosial::with(['kategori', 'koordinator'])
             ->where('status_kegiatan', 'Aktif')
-            ->latest()
+            ->where('status_persetujuan', 'Disetujui')
+            ->orderBy('created_at', 'desc')
             ->take(6)
             ->get();
 
