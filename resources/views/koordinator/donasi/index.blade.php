@@ -20,7 +20,7 @@
                     
                     <div class="mb-8">
                         <h3 class="text-xl font-bold text-gray-900">Daftar Donasi per Kegiatan</h3>
-                        <p class="text-sm text-gray-500 mt-1">Klik pada setiap kegiatan untuk memeriksa bukti transfer dan memverifikasi donasi.</p>
+                        <p class="text-sm text-gray-500 mt-1">Daftar donasi dan status pembayaran (diambil dari Midtrans). Verifikasi manual telah dinonaktifkan.</p>
                     </div>
 
                     @if($donasis->isEmpty())
@@ -67,7 +67,7 @@
                                                     <tr>
                                                         <th scope="col" class="px-6 py-3 text-left text-xs font-extrabold text-gray-500 uppercase tracking-wider">Donatur</th>
                                                         <th scope="col" class="px-6 py-3 text-left text-xs font-extrabold text-gray-500 uppercase tracking-wider">Nominal & Tipe</th>
-                                                        <th scope="col" class="px-6 py-3 text-center text-xs font-extrabold text-gray-500 uppercase tracking-wider">Bukti / Pesan</th>
+                                                        <th scope="col" class="px-6 py-3 text-center text-xs font-extrabold text-gray-500 uppercase tracking-wider">Info Pembayaran</th>
                                                         <th scope="col" class="px-6 py-3 text-center text-xs font-extrabold text-gray-500 uppercase tracking-wider">Status</th>
                                                         <th scope="col" class="px-6 py-3 text-right text-xs font-extrabold text-gray-500 uppercase tracking-wider">Aksi Verifikasi</th>
                                                     </tr>
@@ -86,20 +86,10 @@
                                                                 <div class="text-xs text-gray-500">Tipe: {{ $donasi->jenis_donasi }}</div>
                                                             </td>
                                                             <td class="px-6 py-4 text-center">
-                                                                @if($donasi->pesan_donasi)
-                                                                    <div class="text-xs italic text-gray-600 mb-2 truncate max-w-xs mx-auto" title="{{ $donasi->pesan_donasi }}">
-                                                                        "{{ $donasi->pesan_donasi }}"
-                                                                    </div>
-                                                                @endif
-                                                                
-                                                                @if($donasi->bukti_pembayaran)
-                                                                    <a href="{{ asset('storage/' . $donasi->bukti_pembayaran) }}" target="_blank" class="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-800 bg-blue-50 px-2.5 py-1 rounded-full">
-                                                                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                                                                        Lihat Bukti
-                                                                    </a>
-                                                                @else
-                                                                    <span class="text-xs text-gray-400">Tanpa Bukti</span>
-                                                                @endif
+                                                                <div class="text-xs text-gray-600">
+                                                                    <div class="mb-1">Order: <span class="font-mono text-xs text-gray-800">{{ $donasi->midtrans_order_id ?? '-' }}</span></div>
+                                                                    <div>Status Midtrans: <span class="font-semibold">{{ $donasi->midtrans_status ?? ($donasi->status_donasi ?? '-') }}</span></div>
+                                                                </div>
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                                                 @if($donasi->status_donasi == 'Diterima')
@@ -111,29 +101,8 @@
                                                                 @endif
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                                <div class="flex items-center justify-end gap-2">
-                                                                    @if($donasi->status_donasi !== 'Diterima')
-                                                                    <form action="{{ route('koordinator.donasi.update', $donasi->id_donasi) }}" method="POST">
-                                                                        @csrf
-                                                                        @method('PUT')
-                                                                        <input type="hidden" name="status_donasi" value="Diterima">
-                                                                        <button type="submit" class="p-2 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white rounded-lg transition-colors shadow-sm border border-emerald-100" title="Terima Donasi" onclick="return confirm('Apakah Anda yakin donasi ini valid?');">
-                                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                                                        </button>
-                                                                    </form>
-                                                                    @endif
-
-                                                                    @if($donasi->status_donasi !== 'Ditolak')
-                                                                    <form action="{{ route('koordinator.donasi.update', $donasi->id_donasi) }}" method="POST">
-                                                                        @csrf
-                                                                        @method('PUT')
-                                                                        <input type="hidden" name="status_donasi" value="Ditolak">
-                                                                        <button type="submit" class="p-2 bg-rose-50 text-rose-600 hover:bg-rose-500 hover:text-white rounded-lg transition-colors shadow-sm border border-rose-100" title="Tolak Donasi" onclick="return confirm('Tolak donasi ini?');">
-                                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                                                        </button>
-                                                                    </form>
-                                                                    @endif
-                                                                </div>
+                                                                <!-- Manual verification disabled; status berasal dari Midtrans -->
+                                                                <div class="text-xs text-gray-500">Verifikasi otomatis via Midtrans</div>
                                                             </td>
                                                         </tr>
                                                     @endforeach

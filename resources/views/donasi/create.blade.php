@@ -6,7 +6,7 @@
     </div>
 
     <!-- Alpine.js untuk mengatur jenis donasi secara interaktif -->
-    <form method="POST" action="{{ route('donasi.store', $kegiatan->id_kegiatan) }}" enctype="multipart/form-data" class="space-y-6" x-data="{ jenis_donasi: 'Uang' }">
+    <form method="POST" action="{{ route('donasi.store', $kegiatan->id_kegiatan) }}" class="space-y-6" x-data="{ jenis_donasi: 'Uang' }">
         @csrf
 
         <!-- Pilihan Jenis Donasi -->
@@ -69,37 +69,7 @@
             </div>
         </div>
 
-        <!-- Bukti Gambar -->
-        <div x-data="imageViewer()">
-            <label class="block text-sm font-bold text-gray-700 mb-1" x-text="jenis_donasi === 'Uang' ? 'Unggah Bukti Transfer' : 'Unggah Foto Barang'"></label>
-            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl bg-white/40 hover:bg-white/80 transition-colors relative cursor-pointer" @click="$refs.fileInput.click()">
-                
-                <div class="space-y-1 text-center" x-show="!imageUrl">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <div class="flex justify-center text-sm text-gray-600 mt-2">
-                        <span class="relative cursor-pointer bg-white rounded-md font-bold text-[#4379F2] focus-within:outline-none hover:text-blue-500">
-                            Pilih file
-                        </span>
-                    </div>
-                    <p class="text-xs text-gray-500">PNG, JPG, WEBP hingga 2MB</p>
-                </div>
-
-                <!-- Live Preview -->
-                <div x-show="imageUrl" style="display: none;" class="w-full relative rounded-lg overflow-hidden">
-                    <img :src="imageUrl" class="w-full h-40 object-cover" />
-                    <button type="button" @click.stop="clearImage()" class="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full shadow-md hover:bg-red-600">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                </div>
-
-                <input type="file" x-ref="fileInput" name="bukti_donasi" accept="image/*" class="sr-only" @change="fileChosen" required>
-            </div>
-            @error('bukti_donasi')
-                <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
-            @enderror
-        </div>
+        <!-- NOTE: Upload gambar dihilangkan; donasi barang tidak memerlukan bukti upload. -->
 
         <div class="pt-4">
             <button type="submit" class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-lg shadow-blue-500/30 text-sm font-extrabold text-white bg-gradient-to-r from-[#4379F2] to-blue-600 hover:to-blue-700 hover:-translate-y-0.5 transition-all duration-200">
@@ -108,28 +78,5 @@
         </div>
     </form>
 
-    <!-- Script for Live Image Preview -->
-    <script>
-        function imageViewer() {
-            return {
-                imageUrl: '',
-                fileChosen(event) {
-                    this.fileToDataUrl(event, src => this.imageUrl = src)
-                },
-                fileToDataUrl(event, callback) {
-                    if (! event.target.files.length) return
-
-                    let file = event.target.files[0],
-                        reader = new FileReader()
-
-                    reader.readAsDataURL(file)
-                    reader.onload = e => callback(e.target.result)
-                },
-                clearImage() {
-                    this.imageUrl = '';
-                    this.$refs.fileInput.value = '';
-                }
-            }
-        }
-    </script>
+    <!-- No image upload required; money donations proceed to Midtrans payment. -->
 </x-guest-layout>

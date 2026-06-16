@@ -16,6 +16,7 @@ Route::get('/kegiatan/{id}', [\App\Http\Controllers\PublicController::class, 'sh
 
 Route::get('/kegiatan/{id}/donasi', [\App\Http\Controllers\DonasiController::class, 'create'])->name('donasi.create');
 Route::post('/kegiatan/{id}/donasi', [\App\Http\Controllers\DonasiController::class, 'store'])->name('donasi.store');
+Route::post('/donasi/{id}/midtrans/finish', [\App\Http\Controllers\DonasiController::class, 'midtransFinish'])->name('donasi.midtrans.finish');
 
 
 // ==========================================

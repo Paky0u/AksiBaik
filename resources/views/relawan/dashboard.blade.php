@@ -242,6 +242,56 @@
                     @endforeach
                 </div>
             @endif
+
+            <!-- Riwayat Pembayaran Donasi -->
+            <div class="mt-12">
+                <div class="flex items-end justify-between mb-4">
+                    <div>
+                        <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight">Riwayat Pembayaran</h3>
+                        <p class="text-gray-500 text-sm mt-1.5">Riwayat donasi uang yang Anda lakukan.</p>
+                    </div>
+                </div>
+
+                @if(isset($donasis) && $donasis->isEmpty())
+                    <div class="text-center py-8 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                        <p class="text-gray-500">Belum ada riwayat pembayaran.</p>
+                    </div>
+                @else
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-white/80">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase">Tanggal</th>
+                                    <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase">Kegiatan</th>
+                                    <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase">Nominal</th>
+                                    <th class="px-4 py-2 text-left text-xs font-bold text-gray-500 uppercase">Status Pembayaran</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                @foreach($donasis as $d)
+                                    <tr>
+                                        <td class="px-4 py-3 text-sm text-gray-600">{{ \Carbon\Carbon::parse($d->created_at)->translatedFormat('d M Y H:i') }}</td>
+                                        <td class="px-4 py-3 text-sm font-semibold text-gray-900">{{ $d->kegiatanSosial->judul_kegiatan ?? 'Kegiatan' }}</td>
+                                        <td class="px-4 py-3 text-sm font-extrabold text-[#117554]">Rp {{ number_format($d->nominal_donasi, 0, ',', '.') }}</td>
+                                        <td class="px-4 py-3 text-sm">
+                                            @php
+                                                $mid = $d->midtrans_status ?? null;
+                                            @endphp
+                                            @if($mid === 'pending')
+                                                <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">Pending</span>
+                                            @elseif(in_array($mid, ['capture','settlement']))
+                                                <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">Berhasil</span>
+                                            @else
+                                                <span class="inline-flex px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 text-rose-800 border border-rose-200">Gagal / Tidak Terbayar</span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 </x-app-layout>

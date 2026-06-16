@@ -40,7 +40,13 @@ class DashboardController extends Controller
                 ->orderBy('id_pendaftaran', 'desc')
                 ->get();
 
-            return view('relawan.dashboard', compact('riwayats'));
+            // Ambil riwayat donasi pengguna untuk ditampilkan di dashboard
+            $donasis = Donasi::where('id_pengguna', auth()->id())
+                ->where('jenis_donasi', 'Uang')
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            return view('relawan.dashboard', compact('riwayats', 'donasis'));
         }
     }
 }
