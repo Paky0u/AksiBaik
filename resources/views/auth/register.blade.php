@@ -47,6 +47,19 @@
             @enderror
         </div>
 
+        <!-- Role -->
+        <div>
+            <label for="role" class="block text-sm font-bold text-gray-700 mb-1">Pilih Peran</label>
+            <select id="role" name="role" required
+                class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] transition-all duration-200 outline-none @error('role') border-rose-400 @enderror">
+                <option value="Relawan" {{ old('role') === 'Relawan' ? 'selected' : '' }}>Relawan</option>
+                <option value="Kontributor" {{ old('role') === 'Kontributor' ? 'selected' : '' }}>Kontributor</option>
+            </select>
+            @error('role')
+                <p class="text-xs text-rose-500 mt-1.5 font-bold">{{ $message }}</p>
+            @enderror
+        </div>
+
         <!-- Submit Button -->
         <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-[#6EC207] to-emerald-600 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all duration-300 mt-6">
             Buat Akun Saya

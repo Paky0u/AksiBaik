@@ -22,6 +22,7 @@ class KegiatanSosial extends Model
         'kuota_relawan',
         'target_donasi',
         'poster_donasi',
+        'dokumentasi_foto',
         'status_kegiatan',
         'status_persetujuan',
     ];

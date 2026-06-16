@@ -293,6 +293,41 @@
         </div>
     </section>
 
+    <!-- Kegiatan Selesai / Dokumentasi -->
+    <section id="dokumentasi" class="py-24 bg-white border-t border-gray-100 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-gray-900">Kegiatan Selesai & Dokumentasi</h2>
+                    <p class="text-sm text-gray-500">Momen kebaikan yang telah terlaksana — dokumentasi dari kegiatan.</p>
+                </div>
+            </div>
+
+            @if(isset($kegiatansSelesai) && $kegiatansSelesai->isNotEmpty())
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    @foreach($kegiatansSelesai as $k)
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                            @if($k->dokumentasi_foto)
+                                <img src="{{ asset('storage/' . $k->dokumentasi_foto) }}" alt="Dokumentasi {{ $k->judul_kegiatan }}" class="w-full h-48 object-cover">
+                            @endif
+                            <div class="p-4">
+                                <h4 class="font-bold text-lg text-gray-900 mb-1">{{ $k->judul_kegiatan }}</h4>
+                                <p class="text-sm text-gray-500">{{ \Illuminate\Support\Str::limit($k->deskripsi, 120) }}</p>
+                                <div class="mt-3 text-sm text-gray-600">
+                                    <span class="font-semibold">Tanggal:</span> {{ \Carbon\Carbon::parse($k->tanggal_kegiatan)->translatedFormat('d M Y') }}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="text-center py-12">
+                    <p class="text-gray-500">Belum ada dokumentasi kegiatan yang ditampilkan.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+
     <!-- CTA Section for Koordinator / Admin -->
     <section class="py-24 bg-white relative overflow-hidden">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">

@@ -125,6 +125,7 @@ class KegiatanSosialController extends Controller
             'target_donasi' => 'nullable|numeric|min:0',
             'poster_donasi' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status_kegiatan' => 'required|in:Aktif,Selesai,Dibatalkan',
+            'dokumentasi_foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
         ], [
             'id_kategori.required' => 'Kategori kegiatan wajib dipilih.',
             'id_kategori.exists' => 'Kategori kegiatan tidak valid.',
@@ -142,6 +143,8 @@ class KegiatanSosialController extends Controller
             'target_donasi.min' => 'Target donasi tidak boleh kurang dari 0.',
             'poster_donasi.image' => 'Poster harus berupa file gambar.',
             'poster_donasi.max' => 'Ukuran gambar poster maksimal 2MB.',
+            'dokumentasi_foto.image' => 'File dokumentasi harus berupa gambar.',
+            'dokumentasi_foto.max' => 'Ukuran dokumentasi maksimal 4MB.',
             'status_kegiatan.required' => 'Status kegiatan wajib dipilih.',
             'status_kegiatan.in' => 'Status kegiatan tidak valid.',
         ]);
@@ -150,6 +153,21 @@ class KegiatanSosialController extends Controller
         if ($request->hasFile('poster_donasi')) {
             $path = $request->file('poster_donasi')->store('posters', 'public');
             $validatedData['poster_donasi'] = $path;
+        }
+
+        // Jika status menjadi Selesai, dokumentasi_foto wajib
+        if ($request->input('status_kegiatan') === 'Selesai') {
+            $request->validate(['dokumentasi_foto' => 'required|image|mimes:jpeg,png,jpg,webp|max:4096'], ['dokumentasi_foto.required' => 'Foto dokumentasi wajib diunggah saat menandai kegiatan selesai.']);
+            if ($request->hasFile('dokumentasi_foto')) {
+                $docPath = $request->file('dokumentasi_foto')->store('dokumentasi', 'public');
+                $validatedData['dokumentasi_foto'] = $docPath;
+            }
+        } else {
+            // jika tidak berubah ke Selesai dan ada upload dokumentasi, simpan saja
+            if ($request->hasFile('dokumentasi_foto')) {
+                $docPath = $request->file('dokumentasi_foto')->store('dokumentasi', 'public');
+                $validatedData['dokumentasi_foto'] = $docPath;
+            }
         }
 
         // 3. Update data di database

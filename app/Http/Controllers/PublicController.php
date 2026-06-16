@@ -19,7 +19,17 @@ class PublicController extends Controller
             ->take(6)
             ->get();
 
-        return view('welcome', compact('kegiatans'));
+        // Ambil kegiatan yang sudah selesai untuk ditampilkan sebagai dokumentasi
+        // Tampilkan dokumentasi terlepas dari status persetujuan sehingga foto selesai
+        // langsung dapat dilihat setelah koordinator menandai kegiatan selesai.
+        $kegiatansSelesai = KegiatanSosial::with(['kategori', 'koordinator'])
+            ->where('status_kegiatan', 'Selesai')
+            ->whereNotNull('dokumentasi_foto')
+            ->orderBy('updated_at', 'desc')
+            ->take(6)
+            ->get();
+
+        return view('welcome', compact('kegiatans', 'kegiatansSelesai'));
     }
 
     /**
