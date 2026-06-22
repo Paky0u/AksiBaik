@@ -207,22 +207,30 @@
                     <!-- Dokumentasi Foto (Wajib jika menandai Selesai) -->
                     <div class="bg-emerald-50/30 p-6 rounded-2xl border border-emerald-100/50">
                         <label for="dokumentasi_foto" class="block text-sm font-bold text-emerald-900 mb-4">Foto Dokumentasi (Wajib jika menandai <strong>Selesai</strong>)</label>
-                        <div class="flex items-center gap-6">
-                            @if($kegiatan->dokumentasi_foto)
-                                <div class="shrink-0 p-2 bg-white rounded-xl shadow-sm border border-gray-200">
-                                    <img src="{{ asset('storage/' . $kegiatan->dokumentasi_foto) }}" alt="Dokumentasi" class="w-28 h-20 object-cover rounded-lg">
-                                    <p class="text-[10px] text-center text-gray-500 font-bold mt-2">DOKUMENTASI SAAT INI</p>
+                        <div class="flex flex-col gap-6">
+                            @php
+                                $existingDocs = is_array($kegiatan->dokumentasi_foto) ? $kegiatan->dokumentasi_foto : ($kegiatan->dokumentasi_foto ? [$kegiatan->dokumentasi_foto] : []);
+                            @endphp
+
+                            @if(!empty($existingDocs))
+                                <div class="flex flex-wrap gap-4">
+                                    @foreach($existingDocs as $doc)
+                                        <div class="shrink-0 p-2 bg-white rounded-xl shadow-sm border border-gray-200">
+                                            <img src="{{ asset('storage/' . $doc) }}" alt="Dokumentasi" class="w-28 h-20 object-cover rounded-lg">
+                                        </div>
+                                    @endforeach
                                 </div>
+                                <p class="text-[10px] text-gray-500 font-bold -mt-4">DOKUMENTASI SAAT INI</p>
                             @endif
 
-                            <div class="relative border-2 border-dashed border-emerald-100 rounded-2xl bg-white p-6 text-center hover:bg-emerald-50/50 transition-colors cursor-pointer group w-full h-full flex items-center justify-center min-h-[8rem]">
-                                <input type="file" id="dokumentasi_foto" name="dokumentasi_foto" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*">
+                            <div class="relative border-2 border-dashed border-emerald-100 rounded-2xl bg-white p-6 text-center hover:bg-emerald-50/50 transition-colors cursor-pointer group w-full flex items-center justify-center min-h-[8rem]">
+                                <input type="file" id="dokumentasi_foto" name="dokumentasi_foto[]" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" multiple>
                                 <div class="flex flex-col items-center pointer-events-none">
                                     <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                     </div>
-                                    <p class="text-sm font-bold text-gray-700">Pilih file dokumentasi</p>
-                                    <p class="text-xs text-gray-500">PNG,JPG,WEBP up to 4MB</p>
+                                    <p class="text-sm font-bold text-gray-700">Pilih file dokumentasi (Bisa lebih dari 1 file)</p>
+                                    <p class="text-xs text-gray-500">PNG,JPG,WEBP up to 4MB per foto</p>
                                 </div>
                             </div>
                         </div>
@@ -245,14 +253,15 @@
         </div>
     </div>
     <script>
-        // Require dokumentasi_foto if status_kegiatan == 'Selesai'
+        // Require dokumentasi_foto if status_kegiatan == 'Selesai' and no existing docs
         (function(){
             const statusSelect = document.getElementById('status_kegiatan');
             const docInput = document.getElementById('dokumentasi_foto');
+            const hasExistingDocs = {{ !empty($existingDocs) ? 'true' : 'false' }};
 
             function toggleRequirement(){
                 if(!statusSelect || !docInput) return;
-                if(statusSelect.value === 'Selesai'){
+                if(statusSelect.value === 'Selesai' && !hasExistingDocs){
                     docInput.required = true;
                 } else {
                     docInput.required = false;

@@ -37,6 +37,14 @@
                             {{ __('Persetujuan Kegiatan') }}
                         </x-nav-link>
                     @endif
+                    @if(Auth::user()->role === 'relawan')
+                        <x-nav-link :href="route('relawan.riwayat')" :active="request()->routeIs('relawan.riwayat')">
+                            {{ __('Riwayat Kegiatan') }}
+                        </x-nav-link>
+                    @endif
+                    <x-nav-link :href="route('donasi.riwayat')" :active="request()->routeIs('donasi.riwayat')">
+                        {{ __('Riwayat Donasi') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -114,6 +122,14 @@
                     {{ __('Persetujuan Kegiatan') }}
                 </x-responsive-nav-link>
             @endif
+            @if(Auth::user()->role === 'relawan')
+                <x-responsive-nav-link :href="route('relawan.riwayat')" :active="request()->routeIs('relawan.riwayat')">
+                    {{ __('Riwayat Kegiatan') }}
+                </x-responsive-nav-link>
+            @endif
+            <x-responsive-nav-link :href="route('donasi.riwayat')" :active="request()->routeIs('donasi.riwayat')">
+                {{ __('Riwayat Donasi') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

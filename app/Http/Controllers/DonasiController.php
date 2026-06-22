@@ -7,7 +7,6 @@ use App\Models\KegiatanSosial;
 use App\Models\Donasi;
 use Midtrans\Config;
 use Midtrans\Snap;
-use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Log;
 
@@ -16,6 +15,11 @@ class DonasiController extends Controller
     public function create($id_kegiatan)
     {
         $kegiatan = KegiatanSosial::findOrFail($id_kegiatan);
+        
+        if ($kegiatan->status_kegiatan !== 'Aktif') {
+            return redirect()->route('kegiatan.show', $id_kegiatan)->with('error', 'Kegiatan sudah selesai atau dibatalkan. Tidak dapat menerima donasi lagi.');
+        }
+
         return view('donasi.create', compact('kegiatan'));
     }
 
@@ -36,6 +40,10 @@ class DonasiController extends Controller
         $request->validate($rules);
 
         $kegiatan = KegiatanSosial::findOrFail($id_kegiatan);
+
+        if ($kegiatan->status_kegiatan !== 'Aktif') {
+            return redirect()->route('kegiatan.show', $id_kegiatan)->with('error', 'Kegiatan sudah selesai atau dibatalkan. Tidak dapat menerima donasi lagi.');
+        }
 
         if ($request->input('jenis_donasi') === 'Barang') {
             Donasi::create([
@@ -137,5 +145,15 @@ class DonasiController extends Controller
         }
 
         return response()->json(['success' => false]);
+    }
+
+    public function riwayat()
+    {
+        $riwayatDonasi = Donasi::with('kegiatanSosial.kategori')
+            ->where('id_pengguna', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('donasi.riwayat', compact('riwayatDonasi'));
     }
 }

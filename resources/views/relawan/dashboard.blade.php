@@ -222,10 +222,25 @@
                                                 <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                                 Hadir
                                             </div>
-                                            <a href="{{ route('relawan.sertifikat', $riwayat->id_pendaftaran) }}" target="_blank" class="relative z-40 inline-flex items-center justify-center gap-1 text-[10px] font-bold text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 px-2 py-1 rounded-md shadow-sm transition-colors cursor-pointer">
-                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                                Sertifikat
-                                            </a>
+                                            <div class="flex flex-col gap-1.5 relative z-40">
+                                                <a href="{{ route('relawan.sertifikat', $riwayat->id_pendaftaran) }}" target="_blank" class="inline-flex items-center justify-center gap-1 text-[10px] font-bold text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 px-2 py-1 rounded-md shadow-sm transition-colors cursor-pointer">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                                    Sertifikat
+                                                </a>
+                                                @php
+                                                    $hasFeedback = \App\Models\UmpanBalik::where('id_pengguna', auth()->id())
+                                                        ->where('id_kegiatan', $riwayat->id_kegiatan)->exists();
+                                                @endphp
+                                                @if($hasFeedback)
+                                                    <span class="inline-flex items-center justify-center text-[9px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded-md">
+                                                        Feedback Terkirim
+                                                    </span>
+                                                @else
+                                                    <a href="{{ route('relawan.feedback', $riwayat->id_kegiatan) }}" class="inline-flex items-center justify-center gap-1 text-[10px] font-bold text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 px-2 py-1 rounded-md shadow-sm transition-colors cursor-pointer">
+                                                        Beri Feedback
+                                                    </a>
+                                                @endif
+                                            </div>
                                         @else
                                             <div class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-bold rounded-lg w-full border border-gray-200/50">
                                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M20 12H4"></path></svg>

@@ -165,6 +165,17 @@
                         @endif
                     </div>
 
+                    <!-- Penyelenggara -->
+                    <div class="flex items-center gap-4 p-5 mb-12 bg-white border border-gray-100 rounded-3xl shadow-sm max-w-xl hover:shadow-md transition-shadow">
+                        <div class="w-14 h-14 rounded-full bg-blue-50 text-[#4379F2] flex items-center justify-center font-bold text-xl border border-blue-100">
+                            {{ substr($kegiatan->koordinator->name ?? 'A', 0, 1) }}
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold uppercase tracking-wider mb-0.5">Penyelenggara / Yayasan</p>
+                            <p class="font-extrabold text-gray-900 text-lg">{{ $kegiatan->koordinator->name ?? 'Anonim' }}</p>
+                        </div>
+                    </div>
+
                     <!-- Description -->
                     <div class="prose prose-lg prose-blue max-w-none mb-12 text-gray-600 leading-relaxed">
                         <h3 class="text-2xl font-extrabold text-gray-900 mb-6 tracking-tight">Tentang Program Ini</h3>
@@ -172,6 +183,81 @@
                             {!! nl2br(e($kegiatan->deskripsi)) !!}
                         </div>
                     </div>
+
+                    <!-- Galeri Dokumentasi -->
+                    @php
+                        $docs = is_array($kegiatan->dokumentasi_foto) ? $kegiatan->dokumentasi_foto : (is_string($kegiatan->dokumentasi_foto) && json_decode($kegiatan->dokumentasi_foto) ? json_decode($kegiatan->dokumentasi_foto, true) : ($kegiatan->dokumentasi_foto ? [$kegiatan->dokumentasi_foto] : []));
+                    @endphp
+                    @if(!empty($docs))
+                    <div class="mb-12 border-t border-gray-100 pt-10">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight">Galeri Dokumentasi</h3>
+                            <div class="px-4 py-2 bg-emerald-50 text-emerald-700 rounded-full font-bold text-sm">
+                                {{ count($docs) }} Foto
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            @foreach($docs as $doc)
+                                <div class="relative group rounded-2xl overflow-hidden bg-gray-100 aspect-video shadow-sm border border-gray-200">
+                                    <img src="{{ asset('storage/' . $doc) }}" alt="Dokumentasi Kegiatan" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    <!-- Ulasan & Rating Area -->
+                    @if($kegiatan->umpanBaliks && $kegiatan->umpanBaliks->isNotEmpty())
+                    <div class="mb-12 border-t border-gray-100 pt-10">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight">Ulasan Relawan</h3>
+                            <div class="flex items-center gap-2 px-4 py-2 bg-[#FFEB00]/20 text-yellow-800 rounded-full font-bold">
+                                <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                {{ number_format($kegiatan->umpanBaliks->avg('penilaian'), 1) }} / 10
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            @foreach($kegiatan->umpanBaliks as $ulasan)
+                                <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-full bg-blue-100 text-[#4379F2] flex items-center justify-center font-bold text-lg">
+                                                {{ substr($ulasan->pengguna->name ?? 'R', 0, 1) }}
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-gray-900">{{ $ulasan->pengguna->name ?? 'Relawan Anonim' }}</p>
+                                                <p class="text-xs text-gray-500">{{ \Carbon\Carbon::parse($ulasan->tanggal_umpan_balik)->diffForHumans() }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-1 text-yellow-500 bg-yellow-50 px-2 py-1 rounded-lg">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                            <span class="font-bold text-sm">{{ $ulasan->penilaian }}</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-600 text-sm leading-relaxed">
+                                        "{{ $ulasan->komentar ?? 'Memberikan penilaian yang sangat baik untuk kegiatan ini.' }}"
+                                    </p>
+                                    @auth
+                                        @if(auth()->user()->role === 'admin')
+                                            <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end">
+                                                <form action="{{ route('admin.umpan_balik.destroy', $ulasan->id_umpan_balik) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-xs font-bold text-rose-500 hover:text-rose-700 flex items-center gap-1 transition-colors" onclick="return confirm('Hapus ulasan ini secara permanen?')">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                        Hapus Ulasan (Admin)
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    @endauth
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
 
                     <!-- Action Area / CTA -->
                     <div class="border-t border-gray-200/60 pt-12 text-center bg-gray-50/30 -mx-8 -mb-8 p-8 md:p-12 rounded-b-[2.5rem]">
@@ -186,28 +272,71 @@
                         <p class="text-gray-500 text-lg mb-10 max-w-xl mx-auto">Bergabunglah sebagai relawan, atau berikan donasi terbaik Anda untuk membantu kelancaran program ini.</p>
 
                         <div class="flex flex-col md:flex-row items-center justify-center gap-6">
-                            <!-- Tombol Donasi (Selalu Muncul) -->
-                            <a href="{{ route('donasi.create', $kegiatan->id_kegiatan) }}" class="w-full md:w-auto px-10 py-5 bg-gradient-to-r from-emerald-400 to-emerald-600 text-white text-xl font-bold rounded-full shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group">
-                                Donasi Sekarang
-                                <svg class="w-6 h-6 ml-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                            </a>
-
-                            <!-- Bagian Relawan -->
-                            @auth
-                                @if(auth()->user()->role === 'relawan')
-                                    <form action="{{ route('relawan.daftar', $kegiatan->id_kegiatan) }}" method="POST" class="w-full md:w-auto">
-                                        @csrf
-                                        <button type="submit" class="w-full md:w-auto px-10 py-5 bg-gradient-to-r from-[#4379F2] to-blue-600 text-white text-xl font-bold rounded-full shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group">
-                                            Daftar Sebagai Relawan
-                                            <svg class="w-6 h-6 ml-3 group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                        </button>
-                                    </form>
-                                @endif
-                            @else
-                                <a href="{{ route('login') }}" class="w-full md:w-auto px-10 py-5 bg-white text-gray-800 border-2 border-gray-200 text-xl font-bold rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 hover:border-[#4379F2] transition-all duration-300 flex items-center justify-center">
-                                    Masuk untuk Jadi Relawan
+                            @if($kegiatan->status_kegiatan === 'Aktif')
+                                <!-- Tombol Donasi (Selalu Muncul jika aktif) -->
+                                <a href="{{ route('donasi.create', $kegiatan->id_kegiatan) }}" class="w-full md:w-auto px-10 py-5 bg-gradient-to-r from-emerald-400 to-emerald-600 text-white text-xl font-bold rounded-full shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group">
+                                    Donasi Sekarang
+                                    <svg class="w-6 h-6 ml-3 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                                 </a>
-                            @endauth
+
+                                <!-- Bagian Relawan -->
+                                @auth
+                                    @if(auth()->user()->role === 'relawan')
+                                        @php
+                                            $pendaftaran = \App\Models\PendaftaranRelawan::where('id_pengguna', auth()->id())
+                                                ->where('id_kegiatan', $kegiatan->id_kegiatan)
+                                                ->first();
+                                        @endphp
+                                        @if(!$pendaftaran)
+                                            <form action="{{ route('relawan.daftar', $kegiatan->id_kegiatan) }}" method="POST" class="w-full md:w-auto">
+                                                @csrf
+                                                <button type="submit" class="w-full md:w-auto px-10 py-5 bg-gradient-to-r from-[#4379F2] to-blue-600 text-white text-xl font-bold rounded-full shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group">
+                                                    Daftar Sebagai Relawan
+                                                    <svg class="w-6 h-6 ml-3 group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <div class="w-full md:w-auto px-8 py-4 bg-gray-100 text-gray-500 border border-gray-200 text-lg font-bold rounded-full flex items-center justify-center shadow-sm">
+                                                Status Pendaftaran: {{ $pendaftaran->status_pendaftaran }}
+                                            </div>
+                                        @endif
+                                    @endif
+                                @else
+                                    <a href="{{ route('login') }}" class="w-full md:w-auto px-10 py-5 bg-white text-gray-800 border-2 border-gray-200 text-xl font-bold rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 hover:border-[#4379F2] transition-all duration-300 flex items-center justify-center">
+                                        Masuk untuk Jadi Relawan
+                                    </a>
+                                @endauth
+                            @elseif($kegiatan->status_kegiatan === 'Selesai')
+                                @auth
+                                    @if(auth()->user()->role === 'relawan')
+                                        @php
+                                            $pendaftaran = \App\Models\PendaftaranRelawan::where('id_pengguna', auth()->id())
+                                                ->where('id_kegiatan', $kegiatan->id_kegiatan)
+                                                ->first();
+                                        @endphp
+                                        @if($pendaftaran && $pendaftaran->status_kehadiran === 'Hadir')
+                                            @php
+                                                $hasFeedback = \App\Models\UmpanBalik::where('id_pengguna', auth()->id())
+                                                    ->where('id_kegiatan', $kegiatan->id_kegiatan)->exists();
+                                            @endphp
+                                            @if($hasFeedback)
+                                                <div class="w-full md:w-auto px-8 py-4 bg-emerald-50 text-emerald-600 border border-emerald-200 text-lg font-bold rounded-full flex items-center justify-center shadow-sm">
+                                                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                                    Feedback Terkirim
+                                                </div>
+                                            @else
+                                                <a href="{{ route('relawan.feedback', $kegiatan->id_kegiatan) }}" class="w-full md:w-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-lg font-bold rounded-full shadow-lg shadow-blue-500/30 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                                                    Beri Feedback
+                                                </a>
+                                            @endif
+                                        @endif
+                                    @endif
+                                @endauth
+                                <div class="w-full md:w-auto px-10 py-5 bg-gray-100 text-gray-500 border border-gray-200 text-xl font-bold rounded-full flex items-center justify-center shadow-sm">
+                                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    Kegiatan Telah Selesai
+                                </div>
+                            @endif
                         </div>
                         
                         <!-- Info jika login bukan sebagai relawan -->

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PendaftaranRelawan;
 use App\Models\KegiatanSosial;
+use App\Models\UmpanBalik;
 
 class PendaftaranRelawanController extends Controller
 {
@@ -54,5 +55,80 @@ class PendaftaranRelawanController extends Controller
         }
 
         return view('relawan.sertifikat', compact('pendaftaran'));
+    }
+    /**
+     * Menampilkan halaman riwayat kegiatan yang diikuti oleh relawan.
+     */
+    public function riwayat()
+    {
+        $riwayatPendaftaran = PendaftaranRelawan::with('kegiatanSosial.kategori')
+            ->where('id_pengguna', auth()->id())
+            ->orderBy('tanggal_pendaftaran', 'desc')
+            ->get();
+
+        return view('relawan.riwayat', compact('riwayatPendaftaran'));
+    }
+
+    /**
+     * Menampilkan halaman feedback/penilaian untuk relawan.
+     */
+    public function feedback($id_kegiatan)
+    {
+        $kegiatan = KegiatanSosial::findOrFail($id_kegiatan);
+        $user_id = auth()->id();
+
+        // Pastikan relawan terdaftar dan hadir
+        $pendaftaran = PendaftaranRelawan::where('id_pengguna', $user_id)
+            ->where('id_kegiatan', $id_kegiatan)
+            ->where('status_kehadiran', 'Hadir')
+            ->first();
+
+        if (!$pendaftaran) {
+            return redirect()->route('relawan.riwayat')->with('error', 'Anda hanya dapat memberikan feedback pada kegiatan yang telah Anda hadiri.');
+        }
+
+        // Pastikan belum memberikan feedback
+        $existingFeedback = UmpanBalik::where('id_pengguna', $user_id)
+            ->where('id_kegiatan', $id_kegiatan)
+            ->first();
+
+        if ($existingFeedback) {
+            return redirect()->route('relawan.riwayat')->with('error', 'Anda sudah memberikan feedback untuk kegiatan ini.');
+        }
+
+        return view('relawan.feedback', compact('kegiatan'));
+    }
+
+    /**
+     * Menyimpan feedback/penilaian relawan.
+     */
+    public function storeFeedback(Request $request, $id_kegiatan)
+    {
+        $request->validate([
+            'penilaian' => 'required|integer|min:1|max:10',
+            'komentar' => 'nullable|string|max:1000',
+        ]);
+
+        $user_id = auth()->id();
+
+        // Validasi lagi untuk keamanan
+        $pendaftaran = PendaftaranRelawan::where('id_pengguna', $user_id)
+            ->where('id_kegiatan', $id_kegiatan)
+            ->where('status_kehadiran', 'Hadir')
+            ->first();
+
+        if (!$pendaftaran) {
+            return redirect()->route('relawan.riwayat')->with('error', 'Akses ditolak.');
+        }
+
+        UmpanBalik::create([
+            'id_pengguna' => $user_id,
+            'id_kegiatan' => $id_kegiatan,
+            'penilaian' => $request->penilaian,
+            'komentar' => $request->komentar,
+            'tanggal_umpan_balik' => now(),
+        ]);
+
+        return redirect()->route('relawan.riwayat')->with('success', 'Terima kasih! Feedback Anda telah berhasil dikirim.');
     }
 }

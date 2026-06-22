@@ -216,7 +216,7 @@
                     <h2 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Program Terbaru</h2>
                     <p class="text-lg text-gray-500">Kesempatanmu untuk berbagi hari ini. Pilih kegiatan dan jadilah pahlawan.</p>
                 </div>
-                <a href="#" class="inline-flex items-center gap-2 font-bold text-[#4379F2] hover:text-blue-700 transition">
+                <a href="{{ route('kegiatan.publik') }}" class="inline-flex items-center gap-2 font-bold text-[#4379F2] hover:text-blue-700 transition">
                     Lihat Semua Program 
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
@@ -256,7 +256,14 @@
 
                             <!-- Content -->
                             <div class="p-6 flex-grow flex flex-col bg-white">
-                                <h3 class="text-xl font-bold text-gray-900 mb-4 line-clamp-2 leading-snug group-hover:text-[#4379F2] transition-colors">{{ $kegiatan->judul_kegiatan }}</h3>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2 leading-snug group-hover:text-[#4379F2] transition-colors">{{ $kegiatan->judul_kegiatan }}</h3>
+                                
+                                <div class="flex items-center gap-2 mb-4">
+                                    <div class="w-5 h-5 rounded-full bg-blue-50 text-[#4379F2] flex items-center justify-center font-bold text-[10px] border border-blue-100">
+                                        {{ substr($kegiatan->koordinator->name ?? 'A', 0, 1) }}
+                                    </div>
+                                    <span class="text-xs font-semibold text-gray-500">{{ $kegiatan->koordinator->name ?? 'Anonim' }}</span>
+                                </div>
                                 
                                 <div class="space-y-3 mb-6">
                                     <div class="flex items-center text-gray-600 gap-3">
@@ -306,17 +313,25 @@
             @if(isset($kegiatansSelesai) && $kegiatansSelesai->isNotEmpty())
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     @foreach($kegiatansSelesai as $k)
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-                            @if($k->dokumentasi_foto)
-                                <img src="{{ asset('storage/' . $k->dokumentasi_foto) }}" alt="Dokumentasi {{ $k->judul_kegiatan }}" class="w-full h-48 object-cover">
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 relative group cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                            @php
+                                $docs = is_array($k->dokumentasi_foto) ? $k->dokumentasi_foto : (is_string($k->dokumentasi_foto) && json_decode($k->dokumentasi_foto) ? json_decode($k->dokumentasi_foto, true) : ($k->dokumentasi_foto ? [$k->dokumentasi_foto] : []));
+                                $firstDoc = !empty($docs) ? $docs[0] : null;
+                            @endphp
+                            @if($firstDoc)
+                                <div class="overflow-hidden">
+                                    <img src="{{ asset('storage/' . $firstDoc) }}" alt="Dokumentasi {{ $k->judul_kegiatan }}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700 ease-out">
+                                </div>
                             @endif
                             <div class="p-4">
-                                <h4 class="font-bold text-lg text-gray-900 mb-1">{{ $k->judul_kegiatan }}</h4>
+                                <h4 class="font-bold text-lg text-gray-900 mb-1 group-hover:text-[#4379F2] transition-colors">{{ $k->judul_kegiatan }}</h4>
                                 <p class="text-sm text-gray-500">{{ \Illuminate\Support\Str::limit($k->deskripsi, 120) }}</p>
                                 <div class="mt-3 text-sm text-gray-600">
                                     <span class="font-semibold">Tanggal:</span> {{ \Carbon\Carbon::parse($k->tanggal_kegiatan)->translatedFormat('d M Y') }}
                                 </div>
                             </div>
+                            <!-- Link Overlay -->
+                            <a href="{{ route('kegiatan.show', $k->id_kegiatan) }}" class="absolute inset-0 z-30" aria-label="Lihat Detail Acara"></a>
                         </div>
                     @endforeach
                 </div>
@@ -354,7 +369,7 @@
                 <h4 class="text-white font-bold mb-4">Navigasi</h4>
                 <ul class="space-y-2 text-sm">
                     <li><a href="#" class="hover:text-white transition">Tentang Kami</a></li>
-                    <li><a href="#kegiatan" class="hover:text-white transition">Program</a></li>
+                    <li><a href="{{ route('kegiatan.publik') }}" class="hover:text-white transition">Program</a></li>
                     <li><a href="#" class="hover:text-white transition">Karir</a></li>
                 </ul>
             </div>

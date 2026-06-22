@@ -8,15 +8,17 @@ use Illuminate\Support\Facades\Route;
 // ==========================================
 Route::get('/', [\App\Http\Controllers\PublicController::class, 'index'])->name('home');
 
-Route::get('/kegiatan', function () {
-    return 'Ini halaman daftar kegiatan untuk publik/tamu';
-})->name('kegiatan.publik');
+Route::get('/kegiatan', [\App\Http\Controllers\PublicController::class, 'kegiatan'])->name('kegiatan.publik');
+
 
 Route::get('/kegiatan/{id}', [\App\Http\Controllers\PublicController::class, 'show'])->name('kegiatan.show');
 
 Route::get('/kegiatan/{id}/donasi', [\App\Http\Controllers\DonasiController::class, 'create'])->name('donasi.create');
 Route::post('/kegiatan/{id}/donasi', [\App\Http\Controllers\DonasiController::class, 'store'])->name('donasi.store');
 Route::post('/donasi/{id}/midtrans/finish', [\App\Http\Controllers\DonasiController::class, 'midtransFinish'])->name('donasi.midtrans.finish');
+
+// Webhook Midtrans (Bypasses CSRF di bootstrap/app.php)
+Route::post('/midtrans/webhook', [\App\Http\Controllers\MidtransWebhookController::class, 'handle'])->name('donasi.midtrans.webhook');
 
 
 // ==========================================
@@ -28,6 +30,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', 
     [\App\Http\Controllers\DashboardController::class, 'index'])
     ->name('dashboard');
+
+    // Riwayat Donasi untuk semua user login
+    Route::get('/riwayat-donasi', [\App\Http\Controllers\DonasiController::class, 'riwayat'])->name('donasi.riwayat');
 
     // Profile bawaan Breeze
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -42,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('pengguna', \App\Http\Controllers\Admin\PenggunaController::class)->except(['show', 'create', 'store']);
         Route::get('/verifikasi-kegiatan', [\App\Http\Controllers\Admin\VerifikasiKegiatanController::class, 'index'])->name('verifikasi.kegiatan.index');
         Route::put('/verifikasi-kegiatan/{id}', [\App\Http\Controllers\Admin\VerifikasiKegiatanController::class, 'updateStatus'])->name('verifikasi.kegiatan.update');
+        Route::delete('/umpan-balik/{id}', [\App\Http\Controllers\Admin\UmpanBalikController::class, 'destroy'])->name('umpan_balik.destroy');
     });
 
     // ------------------------------------------
@@ -62,15 +68,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
         
         Route::get('/verifikasi-donasi', [\App\Http\Controllers\Koordinator\VerifikasiDonasiController::class, 'index'])->name('donasi.index');
         Route::put('/verifikasi-donasi/{id}', [\App\Http\Controllers\Koordinator\VerifikasiDonasiController::class, 'updateStatus'])->name('donasi.update');
+        Route::get('/kegiatan/{id}/export-donasi', [\App\Http\Controllers\Koordinator\VerifikasiDonasiController::class, 'export'])->name('donasi.export');
     });
 
     // ------------------------------------------
     // C. KELOMPOK RUTE RELAWAN
     // ------------------------------------------
     Route::middleware(['role:relawan'])->prefix('relawan')->name('relawan.')->group(function () {
-        Route::get('/riwayat-kegiatan', function () { return 'Halaman Riwayat Acara Saya'; })->name('riwayat');
+        Route::get('/riwayat-kegiatan', [\App\Http\Controllers\PendaftaranRelawanController::class, 'riwayat'])->name('riwayat');
         Route::get('/sertifikat/{id_pendaftaran}', [\App\Http\Controllers\PendaftaranRelawanController::class, 'sertifikat'])->name('sertifikat');
-        Route::get('/feedback', function () { return 'Halaman Beri Penilaian'; })->name('feedback');
+        Route::get('/feedback/{id_kegiatan}', [\App\Http\Controllers\PendaftaranRelawanController::class, 'feedback'])->name('feedback');
+        Route::post('/feedback/{id_kegiatan}', [\App\Http\Controllers\PendaftaranRelawanController::class, 'storeFeedback'])->name('feedback.store');
         
         // Rute Pendaftaran Relawan
         Route::post('/daftar/{id_kegiatan}', [\App\Http\Controllers\PendaftaranRelawanController::class, 'store'])->name('daftar');

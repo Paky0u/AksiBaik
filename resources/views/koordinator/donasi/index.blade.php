@@ -61,8 +61,15 @@
 
                                     <!-- Konten Accordion -->
                                     <div x-show="expanded" x-collapse x-cloak>
-                                        <div class="border-t border-gray-100 bg-gray-50/50 p-6 overflow-x-auto">
-                                            <table class="min-w-full divide-y divide-gray-200">
+                                        <div class="border-t border-gray-100 bg-gray-50/50 p-6">
+                                            <div class="mb-4 flex justify-end">
+                                                <a href="{{ route('koordinator.donasi.export', $kegiatan->id_kegiatan) }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 text-sm font-bold text-gray-700 hover:text-[#4379F2] hover:border-[#4379F2] rounded-lg shadow-sm transition-colors">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                                    Export CSV
+                                                </a>
+                                            </div>
+                                            <div class="overflow-x-auto">
+                                                <table class="min-w-full divide-y divide-gray-200">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col" class="px-6 py-3 text-left text-xs font-extrabold text-gray-500 uppercase tracking-wider">Donatur</th>
@@ -80,16 +87,27 @@
                                                                 <div class="text-xs text-gray-500">{{ \Carbon\Carbon::parse($donasi->created_at)->translatedFormat('d M Y H:i') }}</div>
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                                <div class="text-sm font-extrabold text-[#117554]">
-                                                                    Rp {{ number_format($donasi->nominal_donasi, 0, ',', '.') }}
-                                                                </div>
-                                                                <div class="text-xs text-gray-500">Tipe: {{ $donasi->jenis_donasi }}</div>
+                                                                @if($donasi->jenis_donasi === 'Uang')
+                                                                    <div class="text-sm font-extrabold text-[#117554]">
+                                                                        Rp {{ number_format($donasi->nominal_donasi, 0, ',', '.') }}
+                                                                    </div>
+                                                                    <div class="text-xs text-gray-500">Tipe: Uang</div>
+                                                                @else
+                                                                    <div class="text-sm font-extrabold text-gray-900">
+                                                                        {{ $donasi->jumlah_barang }}x {{ $donasi->deskripsi_barang }}
+                                                                    </div>
+                                                                    <div class="text-xs text-gray-500">Tipe: Barang</div>
+                                                                @endif
                                                             </td>
                                                             <td class="px-6 py-4 text-center">
-                                                                <div class="text-xs text-gray-600">
-                                                                    <div class="mb-1">Order: <span class="font-mono text-xs text-gray-800">{{ $donasi->midtrans_order_id ?? '-' }}</span></div>
-                                                                    <div>Status Midtrans: <span class="font-semibold">{{ $donasi->midtrans_status ?? ($donasi->status_donasi ?? '-') }}</span></div>
-                                                                </div>
+                                                                @if($donasi->jenis_donasi === 'Uang')
+                                                                    <div class="text-xs text-gray-600">
+                                                                        <div class="mb-1">Order: <span class="font-mono text-xs text-gray-800">{{ $donasi->midtrans_order_id ?? '-' }}</span></div>
+                                                                        <div>Status Midtrans: <span class="font-semibold">{{ $donasi->midtrans_status ?? ($donasi->status_donasi ?? '-') }}</span></div>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="text-xs text-gray-500">-</div>
+                                                                @endif
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap text-center">
                                                                 @if($donasi->status_donasi == 'Diterima')
@@ -101,13 +119,34 @@
                                                                 @endif
                                                             </td>
                                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                                <!-- Manual verification disabled; status berasal dari Midtrans -->
-                                                                <div class="text-xs text-gray-500">Verifikasi otomatis via Midtrans</div>
+                                                                @if($donasi->jenis_donasi === 'Uang')
+                                                                    <div class="text-xs text-gray-500">Verifikasi otomatis via Midtrans</div>
+                                                                @else
+                                                                    @if($donasi->status_donasi === 'Menunggu Verifikasi' || $donasi->status_donasi === 'Menunggu')
+                                                                        <div class="flex items-center justify-end gap-2">
+                                                                            <form action="{{ route('koordinator.donasi.update', $donasi->id_donasi) }}" method="POST">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <input type="hidden" name="status_donasi" value="Diterima">
+                                                                                <button type="submit" class="px-3 py-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white rounded-lg transition-colors font-semibold text-xs border border-emerald-100" onclick="return confirm('Tandai donasi barang ini telah DITERIMA?')">Terima</button>
+                                                                            </form>
+                                                                            <form action="{{ route('koordinator.donasi.update', $donasi->id_donasi) }}" method="POST">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <input type="hidden" name="status_donasi" value="Ditolak">
+                                                                                <button type="submit" class="px-3 py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-500 hover:text-white rounded-lg transition-colors font-semibold text-xs border border-rose-100" onclick="return confirm('Tolak donasi barang ini?')">Tolak</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="text-xs text-gray-500">Telah diverifikasi</div>
+                                                                    @endif
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>

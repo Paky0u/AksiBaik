@@ -58,13 +58,20 @@
                                     @foreach($kegiatans as $kegiatan)
                                         <tr class="hover:bg-gray-50/50 transition-colors">
                                             <td class="px-6 py-4">
-                                                <div class="text-sm font-bold text-gray-900">{{ $kegiatan->judul_kegiatan }}</div>
+                                                <div class="text-sm font-bold text-gray-900 flex items-center gap-2">
+                                                    {{ $kegiatan->judul_kegiatan }}
+                                                    @if($kegiatan->status_kegiatan === 'Selesai')
+                                                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-200" title="Kegiatan ini sudah selesai dan sedang diajukan dokumentasinya">
+                                                            Selesai
+                                                        </span>
+                                                    @endif
+                                                </div>
                                                 <div class="text-xs text-gray-500 mt-1 flex items-center gap-2">
                                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">{{ $kegiatan->kategori->nama_kategori }}</span>
                                                     <span>{{ \Carbon\Carbon::parse($kegiatan->tanggal_kegiatan)->translatedFormat('d M Y') }}</span>
                                                 </div>
                                                 <div class="text-xs text-gray-500 mt-1 line-clamp-1" title="{{ $kegiatan->lokasi }}">
-                                                    📍 {{ Str::limit($kegiatan->lokasi, 40) }}
+                                                    📍 {{ \Illuminate\Support\Str::limit($kegiatan->lokasi, 40) }}
                                                 </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -89,6 +96,10 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <div class="flex items-center justify-end gap-2">
+                                                    <a href="{{ route('kegiatan.show', $kegiatan->id_kegiatan) }}" target="_blank" class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-600 hover:bg-blue-500 hover:text-white rounded-lg transition-colors shadow-sm border border-blue-100 font-semibold text-xs" title="Lihat halaman detail kegiatan">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        Cek
+                                                    </a>
                                                     
                                                     @if($kegiatan->status_persetujuan !== 'Disetujui')
                                                     <form action="{{ route('admin.verifikasi.kegiatan.update', $kegiatan->id_kegiatan) }}" method="POST" class="inline">

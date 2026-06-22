@@ -9,6 +9,10 @@ class KegiatanSosial extends Model
     // Tentukan primary key yang kita custom
     protected $primaryKey = 'id_kegiatan';
 
+    protected $casts = [
+        'dokumentasi_foto' => 'array',
+    ];
+
     // Daftarkan semua kolom yang boleh diisi melalui form (Mass Assignment)
     protected $fillable = [
         'id_pengguna',
@@ -43,5 +47,14 @@ class KegiatanSosial extends Model
     public function kategori()
     {
         return $this->belongsTo(KategoriKegiatan::class, 'id_kategori', 'id_kategori');
+    }
+
+    /**
+     * Relasi ke Model UmpanBalik
+     * Satu kegiatan bisa memiliki banyak feedback dari relawan
+     */
+    public function umpanBaliks()
+    {
+        return $this->hasMany(UmpanBalik::class, 'id_kegiatan', 'id_kegiatan');
     }
 }

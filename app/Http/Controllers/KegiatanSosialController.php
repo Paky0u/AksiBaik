@@ -125,7 +125,8 @@ class KegiatanSosialController extends Controller
             'target_donasi' => 'nullable|numeric|min:0',
             'poster_donasi' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status_kegiatan' => 'required|in:Aktif,Selesai,Dibatalkan',
-            'dokumentasi_foto' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'dokumentasi_foto' => 'nullable|array',
+            'dokumentasi_foto.*' => 'image|mimes:jpeg,png,jpg,webp|max:4096',
         ], [
             'id_kategori.required' => 'Kategori kegiatan wajib dipilih.',
             'id_kategori.exists' => 'Kategori kegiatan tidak valid.',
@@ -143,8 +144,9 @@ class KegiatanSosialController extends Controller
             'target_donasi.min' => 'Target donasi tidak boleh kurang dari 0.',
             'poster_donasi.image' => 'Poster harus berupa file gambar.',
             'poster_donasi.max' => 'Ukuran gambar poster maksimal 2MB.',
-            'dokumentasi_foto.image' => 'File dokumentasi harus berupa gambar.',
-            'dokumentasi_foto.max' => 'Ukuran dokumentasi maksimal 4MB.',
+            'dokumentasi_foto.array' => 'File dokumentasi tidak valid.',
+            'dokumentasi_foto.*.image' => 'File dokumentasi harus berupa gambar.',
+            'dokumentasi_foto.*.max' => 'Ukuran setiap dokumentasi maksimal 4MB.',
             'status_kegiatan.required' => 'Status kegiatan wajib dipilih.',
             'status_kegiatan.in' => 'Status kegiatan tidak valid.',
         ]);
@@ -155,19 +157,25 @@ class KegiatanSosialController extends Controller
             $validatedData['poster_donasi'] = $path;
         }
 
-        // Jika status menjadi Selesai, dokumentasi_foto wajib
+        // Jika status menjadi Selesai, dokumentasi_foto wajib jika sebelumnya belum ada
         if ($request->input('status_kegiatan') === 'Selesai') {
-            $request->validate(['dokumentasi_foto' => 'required|image|mimes:jpeg,png,jpg,webp|max:4096'], ['dokumentasi_foto.required' => 'Foto dokumentasi wajib diunggah saat menandai kegiatan selesai.']);
-            if ($request->hasFile('dokumentasi_foto')) {
-                $docPath = $request->file('dokumentasi_foto')->store('dokumentasi', 'public');
-                $validatedData['dokumentasi_foto'] = $docPath;
+            $existingDocs = is_array($kegiatan->dokumentasi_foto) ? $kegiatan->dokumentasi_foto : ($kegiatan->dokumentasi_foto ? [$kegiatan->dokumentasi_foto] : []);
+            
+            if (empty($existingDocs) && !$request->hasFile('dokumentasi_foto')) {
+                $request->validate(['dokumentasi_foto' => 'required|array'], ['dokumentasi_foto.required' => 'Foto dokumentasi wajib diunggah minimal 1 saat menandai kegiatan selesai.']);
             }
-        } else {
-            // jika tidak berubah ke Selesai dan ada upload dokumentasi, simpan saja
-            if ($request->hasFile('dokumentasi_foto')) {
-                $docPath = $request->file('dokumentasi_foto')->store('dokumentasi', 'public');
-                $validatedData['dokumentasi_foto'] = $docPath;
+        }
+
+        // Proses unggah multiple file
+        if ($request->hasFile('dokumentasi_foto')) {
+            $docPaths = [];
+            foreach ($request->file('dokumentasi_foto') as $file) {
+                $docPaths[] = $file->store('dokumentasi', 'public');
             }
+            
+            // Gabungkan dengan dokumentasi lama (jika ada)
+            $existingDocs = is_array($kegiatan->dokumentasi_foto) ? $kegiatan->dokumentasi_foto : ($kegiatan->dokumentasi_foto ? [$kegiatan->dokumentasi_foto] : []);
+            $validatedData['dokumentasi_foto'] = array_merge($existingDocs, $docPaths);
         }
 
         // 3. Update data di database
