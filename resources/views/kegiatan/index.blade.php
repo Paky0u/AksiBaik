@@ -30,10 +30,7 @@
             <div class="flex justify-between h-20 items-center">
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group cursor-pointer">
-                    <div class="w-10 h-10 bg-gradient-to-br from-[#4379F2] to-[#6EC207] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:rotate-12 transition-transform duration-300">
-                        AB
-                    </div>
-                    <span class="font-extrabold text-2xl tracking-tight text-gray-900 group-hover:text-[#4379F2] transition-colors">Aksi<span class="text-[#6EC207]">Baik</span></span>
+                    <img src="{{ asset('images/logo-aksibaik.png') }}" alt="AksiBaik Logo" class="h-12 w-auto">
                 </a>
                 
                 <!-- Links -->
@@ -41,11 +38,11 @@
                     @if (Route::has('login'))
                         <div class="flex items-center gap-6">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-gray-600 hover:text-[#4379F2] transition">Ke Dasbor Saya</a>
+                                <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-gray-600 hover:text-[#0ecedb] transition">Ke Dasbor Saya</a>
                             @else
-                                <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600 hover:text-[#4379F2] transition relative group">
+                                <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600 hover:text-[#0ecedb] transition relative group">
                                     Masuk
-                                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#4379F2] transition-all group-hover:w-full"></span>
+                                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0ecedb] transition-all group-hover:w-full"></span>
                                 </a>
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" class="px-6 py-2.5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-bold rounded-full shadow-xl shadow-gray-900/20 hover:shadow-gray-900/40 hover:-translate-y-0.5 transition-all duration-300">
@@ -72,7 +69,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col xl:flex-row xl:items-end justify-between mb-12 gap-6">
                 <div class="max-w-2xl">
-                    <span class="text-[#6EC207] font-bold tracking-widest uppercase text-sm mb-2 block">Etalase Kebaikan</span>
+                    <span class="text-[#6ef3d6] font-bold tracking-widest uppercase text-sm mb-2 block">Etalase Kebaikan</span>
                     <h2 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Semua Program Kebaikan</h2>
                     <p class="text-lg text-gray-500">Pilih kegiatan dan jadilah pahlawan untuk mereka yang membutuhkan.</p>
                 </div>
@@ -82,10 +79,10 @@
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kegiatan, lokasi..." class="block w-full pl-11 pr-4 py-3.5 border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-[#4379F2] focus:border-[#4379F2] transition-shadow shadow-sm font-medium">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kegiatan, lokasi..." class="block w-full pl-11 pr-4 py-3.5 border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-[#0ecedb] focus:border-[#0ecedb] transition-shadow shadow-sm font-medium">
                     </div>
                     
-                    <select name="kategori_id" class="block w-full sm:w-48 pl-4 pr-10 py-3.5 border-gray-200 focus:ring-2 focus:ring-[#4379F2] focus:border-[#4379F2] rounded-xl bg-white transition-shadow shadow-sm font-medium text-gray-700">
+                    <select name="kategori_id" class="block w-full sm:w-48 pl-4 pr-10 py-3.5 border-gray-200 focus:ring-2 focus:ring-[#0ecedb] focus:border-[#0ecedb] rounded-xl bg-white transition-shadow shadow-sm font-medium text-gray-700">
                         <option value="">Semua Kategori</option>
                         @foreach($semuaKategori as $kategori)
                             <option value="{{ $kategori->id_kategori }}" {{ request('kategori_id') == $kategori->id_kategori ? 'selected' : '' }}>
@@ -94,7 +91,7 @@
                         @endforeach
                     </select>
                     
-                    <button type="submit" class="w-full sm:w-auto px-6 py-3.5 bg-[#4379F2] hover:bg-blue-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                    <button type="submit" class="w-full sm:w-auto px-6 py-3.5 bg-[#0ecedb] hover:bg-blue-700 text-white font-bold rounded-xl shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
                         <span>Cari</span>
                     </button>
                     
@@ -124,7 +121,7 @@
                                 @if($kegiatan->poster_donasi)
                                     <img src="{{ asset('storage/' . $kegiatan->poster_donasi) }}" alt="{{ $kegiatan->judul_kegiatan }}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-out">
                                 @else
-                                    <div class="w-full h-full bg-gradient-to-br from-[#4379F2] to-indigo-500 group-hover:scale-110 transition duration-700 ease-out flex items-center justify-center">
+                                    <div class="w-full h-full bg-gradient-to-br from-[#0ecedb] to-indigo-500 group-hover:scale-110 transition duration-700 ease-out flex items-center justify-center">
                                         <svg class="w-16 h-16 text-white/20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg>
                                     </div>
                                 @endif
@@ -140,10 +137,10 @@
 
                             <!-- Content -->
                             <div class="p-6 flex-grow flex flex-col bg-white">
-                                <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2 leading-snug group-hover:text-[#4379F2] transition-colors">{{ $kegiatan->judul_kegiatan }}</h3>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2 leading-snug group-hover:text-[#0ecedb] transition-colors">{{ $kegiatan->judul_kegiatan }}</h3>
                                 
                                 <div class="flex items-center gap-2 mb-4">
-                                    <div class="w-5 h-5 rounded-full bg-blue-50 text-[#4379F2] flex items-center justify-center font-bold text-[10px] border border-blue-100">
+                                    <div class="w-5 h-5 rounded-full bg-blue-50 text-[#0ecedb] flex items-center justify-center font-bold text-[10px] border border-blue-100">
                                         {{ substr($kegiatan->koordinator->name ?? 'A', 0, 1) }}
                                     </div>
                                     <span class="text-xs font-semibold text-gray-500">{{ $kegiatan->koordinator->name ?? 'Anonim' }}</span>
@@ -167,9 +164,9 @@
                                 <div class="pt-5 border-t border-gray-100/80 flex items-center justify-between mt-auto">
                                     <div>
                                         <span class="block text-gray-400 text-[10px] uppercase font-bold tracking-wider mb-1">Dibutuhkan</span>
-                                        <span class="font-bold text-[#6EC207] bg-emerald-50 px-2 py-1 rounded-md text-sm">{{ $kegiatan->kuota_relawan }} Relawan</span>
+                                        <span class="font-bold text-[#6ef3d6] bg-emerald-50 px-2 py-1 rounded-md text-sm">{{ $kegiatan->kuota_relawan }} Relawan</span>
                                     </div>
-                                    <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#4379F2] group-hover:text-white transition-colors duration-300">
+                                    <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#0ecedb] group-hover:text-white transition-colors duration-300">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                     </div>
                                 </div>

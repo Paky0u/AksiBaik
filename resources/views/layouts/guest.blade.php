@@ -56,10 +56,7 @@
         <div class="w-full sm:max-w-md px-6 py-8 glass-panel sm:rounded-[2rem] z-10 mx-4 sm:mx-0">
             <div class="flex justify-center mb-8">
                 <a href="/" class="flex items-center gap-2 group">
-                    <div class="w-12 h-12 bg-gradient-to-br from-[#4379F2] to-emerald-400 rounded-xl flex items-center justify-center text-white font-extrabold text-2xl shadow-lg group-hover:rotate-12 transition-transform duration-300">
-                        A
-                    </div>
-                    <span class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-[#4379F2] to-emerald-500">AksiBaik</span>
+                    <img src="{{ asset('images/logo-aksibaik.png') }}" alt="AksiBaik Logo" class="h-16 w-auto">
                 </a>
             </div>
 

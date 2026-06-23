@@ -61,7 +61,7 @@
             content: '';
             position: absolute;
             top: -10px; left: -10px; right: -10px; bottom: -10px;
-            border: 4px solid #4379F2;
+            border: 4px solid #0ecedb;
             opacity: 0.1;
         }
 
@@ -78,7 +78,7 @@
         .logo {
             font-size: 28px;
             font-weight: 800;
-            color: #4379F2;
+            color: #0ecedb;
             margin-bottom: 20px;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -103,7 +103,7 @@
         .recipient-name {
             font-family: 'Playfair Display', serif;
             font-size: 56px;
-            color: #4379F2;
+            color: #0ecedb;
             margin: 0 0 20px 0;
             font-weight: 700;
             border-bottom: 2px solid #E5E7EB;
@@ -185,7 +185,7 @@
         <a href="{{ route('dashboard') }}" class="px-4 py-2 bg-white text-gray-700 rounded-lg shadow-md font-bold text-sm hover:bg-gray-50 transition-colors">
             Kembali
         </a>
-        <button onclick="window.print()" class="px-6 py-2 bg-[#4379F2] text-white rounded-lg shadow-md font-bold text-sm hover:bg-blue-700 transition-colors flex items-center gap-2">
+        <button onclick="window.print()" class="px-6 py-2 bg-[#0ecedb] text-white rounded-lg shadow-md font-bold text-sm hover:bg-blue-700 transition-colors flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
             Cetak / Simpan PDF
         </button>

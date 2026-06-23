@@ -30,7 +30,7 @@
                             <h3 class="text-xl font-bold text-gray-900">Daftar Kategori</h3>
                             <p class="text-sm text-gray-500">Kelola kategori yang dapat digunakan saat membuat kegiatan sosial baru.</p>
                         </div>
-                        <a href="{{ route('admin.kategori.create') }}" class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-[#4379F2] to-blue-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-200">
+                        <a href="{{ route('admin.kategori.create') }}" class="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-[#0ecedb] to-blue-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-200">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                             Tambah Kategori Baru
                         </a>
@@ -65,7 +65,7 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <div class="flex items-center justify-end gap-2">
-                                                    <a href="{{ route('admin.kategori.edit', $kategori->id_kategori) }}" class="p-2 bg-blue-50 text-blue-600 hover:bg-[#4379F2] hover:text-white rounded-lg transition-colors shadow-sm border border-blue-100" title="Edit">
+                                                    <a href="{{ route('admin.kategori.edit', $kategori->id_kategori) }}" class="p-2 bg-blue-50 text-blue-600 hover:bg-[#0ecedb] hover:text-white rounded-lg transition-colors shadow-sm border border-blue-100" title="Edit">
                                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                                     </a>
                                                     

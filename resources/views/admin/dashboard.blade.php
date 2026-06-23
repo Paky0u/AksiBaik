@@ -19,7 +19,7 @@
                         </p>
                     </div>
                     <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center gap-3">
-                        <div class="w-2.5 h-2.5 rounded-full bg-[#6EC207] animate-pulse"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-[#6ef3d6] animate-pulse"></div>
                         <span class="text-sm font-semibold text-blue-800">Sistem Berjalan Aktif</span>
                     </div>
                 </div>
@@ -28,7 +28,7 @@
             <!-- Stats Grid - Mobile First (1 Col, 3 Col on Desktop) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Card 1: Total Relawan -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl border-l-8 border-[#4379F2] p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl border-l-8 border-[#0ecedb] p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Total Relawan Terdaftar</p>
@@ -37,7 +37,7 @@
                             </h3>
                             <p class="text-xs text-gray-400 mt-1">Pemuda, komunitas, & individu aktif</p>
                         </div>
-                        <div class="p-4 bg-blue-50 text-[#4379F2] rounded-2xl">
+                        <div class="p-4 bg-blue-50 text-[#0ecedb] rounded-2xl">
                             <!-- Icon: User Group -->
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -47,7 +47,7 @@
                 </div>
 
                 <!-- Card 2: Total Kegiatan -->
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl border-l-8 border-[#6EC207] p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-2xl border-l-8 border-[#6ef3d6] p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Total Kegiatan Sosial</p>
@@ -56,7 +56,7 @@
                             </h3>
                             <p class="text-xs text-gray-400 mt-1">Program aktif, selesai, & rencana</p>
                         </div>
-                        <div class="p-4 bg-green-50 text-[#6EC207] rounded-2xl">
+                        <div class="p-4 bg-green-50 text-[#6ef3d6] rounded-2xl">
                             <!-- Icon: Document Text / Calendar -->
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -90,7 +90,7 @@
                 <h3 class="text-lg font-bold text-gray-800 border-b border-gray-100 pb-4">Menu Pintasan Manajemen</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                     <a href="{{ route('admin.kategori.index') }}" class="flex items-center gap-4 p-4 border border-gray-100 rounded-xl hover:bg-gray-50 hover:border-blue-200 transition-all group">
-                        <div class="p-3 bg-blue-100 text-[#4379F2] rounded-xl group-hover:scale-110 transition-transform">
+                        <div class="p-3 bg-blue-100 text-[#0ecedb] rounded-xl group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                         </div>
                         <div>

@@ -32,7 +32,7 @@
 
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 relative z-10">
             
-            <a href="{{ route('koordinator.kegiatan.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 text-sm font-bold text-gray-600 hover:text-[#4379F2] mb-8 hover:-translate-x-1 transition-all">
+            <a href="{{ route('koordinator.kegiatan.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-gray-100 text-sm font-bold text-gray-600 hover:text-[#0ecedb] mb-8 hover:-translate-x-1 transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 Kembali ke Daftar
             </a>
@@ -51,13 +51,13 @@
                     @method('PUT')
 
                     <!-- Status Kegiatan - Highlighted at top for Edit form -->
-                    <div class="bg-[#4379F2]/5 p-6 rounded-2xl border border-[#4379F2]/20">
-                        <label for="status_kegiatan" class="block text-sm font-bold text-[#4379F2] mb-2 flex items-center gap-2">
+                    <div class="bg-[#0ecedb]/5 p-6 rounded-2xl border border-[#0ecedb]/20">
+                        <label for="status_kegiatan" class="block text-sm font-bold text-[#0ecedb] mb-2 flex items-center gap-2">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             Status Perjalanan Program <span class="text-rose-500">*</span>
                         </label>
                         <select id="status_kegiatan" name="status_kegiatan" 
-                            class="input-premium w-full px-5 py-3 bg-white border border-[#4379F2]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4379F2]/30 text-gray-900 font-bold shadow-sm" required>
+                            class="input-premium w-full px-5 py-3 bg-white border border-[#0ecedb]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0ecedb]/30 text-gray-900 font-bold shadow-sm" required>
                             <option value="Aktif" {{ old('status_kegiatan', $kegiatan->status_kegiatan) === 'Aktif' ? 'selected' : '' }}>🟢 Aktif (Sedang Berjalan/Menerima Pendaftar)</option>
                             <option value="Selesai" {{ old('status_kegiatan', $kegiatan->status_kegiatan) === 'Selesai' ? 'selected' : '' }}>🏁 Selesai (Program Berakhir)</option>
                             <option value="Dibatalkan" {{ old('status_kegiatan', $kegiatan->status_kegiatan) === 'Dibatalkan' ? 'selected' : '' }}>🔴 Dibatalkan</option>
@@ -71,7 +71,7 @@
                     <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100/50">
                         <label for="judul_kegiatan" class="block text-sm font-bold text-gray-700 mb-2">Judul Program <span class="text-rose-500">*</span></label>
                         <input type="text" id="judul_kegiatan" name="judul_kegiatan" value="{{ old('judul_kegiatan', $kegiatan->judul_kegiatan) }}" 
-                            class="input-premium w-full px-5 py-3.5 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] text-gray-800 text-lg font-semibold placeholder-gray-300 @error('judul_kegiatan') border-rose-400 @else border-gray-200 @enderror" required>
+                            class="input-premium w-full px-5 py-3.5 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0ecedb]/20 focus:border-[#0ecedb] text-gray-800 text-lg font-semibold placeholder-gray-300 @error('judul_kegiatan') border-rose-400 @else border-gray-200 @enderror" required>
                         @error('judul_kegiatan')
                             <p class="text-xs text-rose-500 mt-2 font-semibold flex items-center gap-1"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>{{ $message }}</p>
                         @enderror
@@ -82,7 +82,7 @@
                         <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100/50">
                             <label for="id_kategori" class="block text-sm font-bold text-gray-700 mb-2">Kategori <span class="text-rose-500">*</span></label>
                             <select id="id_kategori" name="id_kategori" 
-                                class="input-premium w-full px-5 py-3.5 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] text-gray-700 font-medium @error('id_kategori') border-rose-400 @else border-gray-200 @enderror" required>
+                                class="input-premium w-full px-5 py-3.5 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0ecedb]/20 focus:border-[#0ecedb] text-gray-700 font-medium @error('id_kategori') border-rose-400 @else border-gray-200 @enderror" required>
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id_kategori }}" {{ old('id_kategori', $kegiatan->id_kategori) == $category->id_kategori ? 'selected' : '' }}>
                                         {{ $category->nama_kategori }}
@@ -98,7 +98,7 @@
                             <label for="kuota_relawan" class="block text-sm font-bold text-gray-700 mb-2">Kebutuhan Relawan <span class="text-rose-500">*</span></label>
                             <div class="relative">
                                 <input type="number" id="kuota_relawan" name="kuota_relawan" value="{{ old('kuota_relawan', $kegiatan->kuota_relawan) }}" min="1"
-                                    class="input-premium w-full pl-5 pr-16 py-3.5 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] text-gray-800 font-semibold @error('kuota_relawan') border-rose-400 @else border-gray-200 @enderror" required>
+                                    class="input-premium w-full pl-5 pr-16 py-3.5 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0ecedb]/20 focus:border-[#0ecedb] text-gray-800 font-semibold @error('kuota_relawan') border-rose-400 @else border-gray-200 @enderror" required>
                                 <div class="absolute inset-y-0 right-0 flex items-center pr-5 pointer-events-none">
                                     <span class="text-gray-400 font-bold text-sm">Orang</span>
                                 </div>
@@ -116,7 +116,7 @@
                             <div>
                                 <label for="tanggal_kegiatan" class="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Tanggal</label>
                                 <input type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" value="{{ old('tanggal_kegiatan', $kegiatan->tanggal_kegiatan) }}"
-                                    class="input-premium w-full px-4 py-3 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] font-semibold text-gray-700 @error('tanggal_kegiatan') border-rose-400 @else border-gray-200 @enderror" required>
+                                    class="input-premium w-full px-4 py-3 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0ecedb]/20 focus:border-[#0ecedb] font-semibold text-gray-700 @error('tanggal_kegiatan') border-rose-400 @else border-gray-200 @enderror" required>
                                 @error('tanggal_kegiatan')
                                     <p class="text-[10px] text-rose-500 mt-1 font-bold">{{ $message }}</p>
                                 @enderror
@@ -124,7 +124,7 @@
                             <div>
                                 <label for="waktu_mulai" class="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Mulai</label>
                                 <input type="time" id="waktu_mulai" name="waktu_mulai" value="{{ old('waktu_mulai', \Carbon\Carbon::parse($kegiatan->waktu_mulai)->format('H:i')) }}"
-                                    class="input-premium w-full px-4 py-3 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] font-semibold text-gray-700 @error('waktu_mulai') border-rose-400 @else border-gray-200 @enderror" required>
+                                    class="input-premium w-full px-4 py-3 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0ecedb]/20 focus:border-[#0ecedb] font-semibold text-gray-700 @error('waktu_mulai') border-rose-400 @else border-gray-200 @enderror" required>
                                 @error('waktu_mulai')
                                     <p class="text-[10px] text-rose-500 mt-1 font-bold">{{ $message }}</p>
                                 @enderror
@@ -132,7 +132,7 @@
                             <div>
                                 <label for="waktu_selesai" class="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wider">Selesai</label>
                                 <input type="time" id="waktu_selesai" name="waktu_selesai" value="{{ old('waktu_selesai', \Carbon\Carbon::parse($kegiatan->waktu_selesai)->format('H:i')) }}"
-                                    class="input-premium w-full px-4 py-3 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] font-semibold text-gray-700 @error('waktu_selesai') border-rose-400 @else border-gray-200 @enderror" required>
+                                    class="input-premium w-full px-4 py-3 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0ecedb]/20 focus:border-[#0ecedb] font-semibold text-gray-700 @error('waktu_selesai') border-rose-400 @else border-gray-200 @enderror" required>
                                 @error('waktu_selesai')
                                     <p class="text-[10px] text-rose-500 mt-1 font-bold">{{ $message }}</p>
                                 @enderror
@@ -170,7 +170,7 @@
                     <div class="bg-gray-50/50 p-6 rounded-2xl border border-gray-100/50">
                         <label for="deskripsi" class="block text-sm font-bold text-gray-700 mb-2">Deskripsi Program <span class="text-rose-500">*</span></label>
                         <textarea id="deskripsi" name="deskripsi" rows="6"
-                            class="input-premium w-full px-5 py-4 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4379F2]/20 focus:border-[#4379F2] text-gray-700 leading-relaxed @error('deskripsi') border-rose-400 @else border-gray-200 @enderror" required>{{ old('deskripsi', $kegiatan->deskripsi) }}</textarea>
+                            class="input-premium w-full px-5 py-4 bg-white border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0ecedb]/20 focus:border-[#0ecedb] text-gray-700 leading-relaxed @error('deskripsi') border-rose-400 @else border-gray-200 @enderror" required>{{ old('deskripsi', $kegiatan->deskripsi) }}</textarea>
                         @error('deskripsi')
                             <p class="text-xs text-rose-500 mt-2 font-semibold">{{ $message }}</p>
                         @enderror
@@ -192,7 +192,7 @@
                                 <input type="file" id="poster_donasi" name="poster_donasi" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*">
                                 
                                 <div class="flex flex-col items-center pointer-events-none">
-                                    <div class="w-10 h-10 bg-blue-100 text-[#4379F2] rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                                    <div class="w-10 h-10 bg-blue-100 text-[#0ecedb] rounded-full flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                                     </div>
                                     <p class="text-sm font-bold text-gray-700">Pilih file poster baru</p>
@@ -244,7 +244,7 @@
                         <a href="{{ route('koordinator.kegiatan.index') }}" class="px-6 py-3.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold rounded-xl transition duration-200">
                             Batalkan Perubahan
                         </a>
-                        <button type="submit" class="px-10 py-3.5 bg-gradient-to-r from-[#4379F2] to-blue-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 transition-all duration-300">
+                        <button type="submit" class="px-10 py-3.5 bg-gradient-to-r from-[#0ecedb] to-blue-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 transition-all duration-300">
                             Simpan Pembaruan
                         </button>
                     </div>

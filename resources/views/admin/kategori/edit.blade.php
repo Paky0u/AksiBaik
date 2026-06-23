@@ -22,7 +22,7 @@
                         <!-- Nama Kategori -->
                         <div>
                             <label for="nama_kategori" class="block text-sm font-bold text-gray-700 mb-1">Nama Kategori <span class="text-rose-500">*</span></label>
-                            <input id="nama_kategori" type="text" name="nama_kategori" value="{{ old('nama_kategori', $kategori->nama_kategori) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#4379F2] focus:ring-4 focus:ring-blue-50 transition-all font-semibold">
+                            <input id="nama_kategori" type="text" name="nama_kategori" value="{{ old('nama_kategori', $kategori->nama_kategori) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#0ecedb] focus:ring-4 focus:ring-blue-50 transition-all font-semibold">
                             @error('nama_kategori')
                                 <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
                             @enderror
@@ -31,7 +31,7 @@
                         <!-- Deskripsi -->
                         <div>
                             <label for="deskripsi" class="block text-sm font-bold text-gray-700 mb-1">Deskripsi <span class="text-gray-400 font-normal">(Opsional)</span></label>
-                            <textarea id="deskripsi" name="deskripsi" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#4379F2] focus:ring-4 focus:ring-blue-50 transition-all text-gray-600">{{ old('deskripsi', $kategori->deskripsi) }}</textarea>
+                            <textarea id="deskripsi" name="deskripsi" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#0ecedb] focus:ring-4 focus:ring-blue-50 transition-all text-gray-600">{{ old('deskripsi', $kategori->deskripsi) }}</textarea>
                             @error('deskripsi')
                                 <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
                             @enderror

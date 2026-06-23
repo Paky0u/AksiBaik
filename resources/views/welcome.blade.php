@@ -53,23 +53,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <!-- Logo -->
-                <div class="flex items-center gap-3 group cursor-pointer">
-                    <div class="w-10 h-10 bg-gradient-to-br from-[#4379F2] to-[#6EC207] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:rotate-12 transition-transform duration-300">
-                        AB
-                    </div>
-                    <span class="font-extrabold text-2xl tracking-tight text-gray-900 group-hover:text-[#4379F2] transition-colors">Aksi<span class="text-[#6EC207]">Baik</span></span>
-                </div>
+                <a href="{{ route('home') }}" class="flex items-center gap-3 group cursor-pointer">
+                    <img src="{{ asset('images/logo-aksibaik.png') }}" alt="AksiBaik Logo" class="h-12 w-auto">
+                </a>
                 
                 <!-- Links -->
                 <div>
                     @if (Route::has('login'))
                         <div class="flex items-center gap-6">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-gray-600 hover:text-[#4379F2] transition">Ke Dasbor Saya</a>
+                                <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-gray-600 hover:text-[#0ecedb] transition">Ke Dasbor Saya</a>
                             @else
-                                <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600 hover:text-[#4379F2] transition relative group">
+                                <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600 hover:text-[#0ecedb] transition relative group">
                                     Masuk
-                                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#4379F2] transition-all group-hover:w-full"></span>
+                                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0ecedb] transition-all group-hover:w-full"></span>
                                 </a>
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" class="px-6 py-2.5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-bold rounded-full shadow-xl shadow-gray-900/20 hover:shadow-gray-900/40 hover:-translate-y-0.5 transition-all duration-300">
@@ -100,7 +97,7 @@
                     </div>
                     
                     <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight text-gray-900 mb-6 leading-[1.1]">
-                        Ubah Niat Baik <br class="hidden lg:block" /> Menjadi <span class="bg-gradient-to-r from-[#4379F2] to-purple-600 text-gradient">Aksi Nyata.</span>
+                        Ubah Niat Baik <br class="hidden lg:block" /> Menjadi <span class="bg-gradient-to-r from-[#0ecedb] to-purple-600 text-gradient">Aksi Nyata.</span>
                     </h1>
                     
                     <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
@@ -108,7 +105,7 @@
                     </p>
                     
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="#kegiatan" class="px-8 py-4 bg-gradient-to-r from-[#4379F2] to-blue-600 text-white font-bold rounded-full shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                        <a href="#kegiatan" class="px-8 py-4 bg-gradient-to-r from-[#0ecedb] to-blue-600 text-white font-bold rounded-full shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
                             Mulai Beraksi
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </a>
@@ -139,10 +136,10 @@
                     <!-- Main image placeholder / geometric shapes since we don't have real images -->
                     <div class="relative z-10 grid grid-cols-2 gap-4 animate-float-delayed">
                         <div class="space-y-4">
-                            <div class="h-48 w-full bg-gradient-to-br from-[#4379F2] to-indigo-500 rounded-[2rem] shadow-2xl flex items-center justify-center">
+                            <div class="h-48 w-full bg-gradient-to-br from-[#0ecedb] to-indigo-500 rounded-[2rem] shadow-2xl flex items-center justify-center">
                                 <span class="text-6xl">🤝</span>
                             </div>
-                            <div class="h-64 w-full bg-gradient-to-tr from-[#6EC207] to-emerald-500 rounded-[2rem] shadow-2xl flex items-center justify-center">
+                            <div class="h-64 w-full bg-gradient-to-tr from-[#6ef3d6] to-emerald-500 rounded-[2rem] shadow-2xl flex items-center justify-center">
                                 <span class="text-6xl">🌱</span>
                             </div>
                         </div>
@@ -164,7 +161,7 @@
     <section id="cara-kerja" class="py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-[#4379F2] font-bold tracking-widest uppercase text-sm mb-2 block">Alur Kebaikan</span>
+                <span class="text-[#0ecedb] font-bold tracking-widest uppercase text-sm mb-2 block">Alur Kebaikan</span>
                 <h2 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Bagaimana AksiBaik Bekerja?</h2>
                 <p class="text-lg text-gray-500">Tiga langkah mudah untuk mulai memberikan dampak positif bagi lingkungan sekitar Anda.</p>
             </div>
@@ -175,8 +172,8 @@
                 
                 <!-- Step 1 -->
                 <div class="text-center group">
-                    <div class="w-24 h-24 mx-auto bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#4379F2] group-hover:text-white transition-all duration-300 shadow-lg shadow-blue-100/50">
-                        <span class="text-3xl font-black text-[#4379F2] group-hover:text-white">1</span>
+                    <div class="w-24 h-24 mx-auto bg-blue-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#0ecedb] group-hover:text-white transition-all duration-300 shadow-lg shadow-blue-100/50">
+                        <span class="text-3xl font-black text-[#0ecedb] group-hover:text-white">1</span>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Eksplorasi</h3>
                     <p class="text-gray-500 leading-relaxed">Cari program sosial atau kegiatan kerelawanan yang sesuai dengan minat dan lokasimu.</p>
@@ -184,8 +181,8 @@
                 
                 <!-- Step 2 -->
                 <div class="text-center group">
-                    <div class="w-24 h-24 mx-auto bg-emerald-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#6EC207] group-hover:text-white transition-all duration-300 shadow-lg shadow-emerald-100/50">
-                        <span class="text-3xl font-black text-[#6EC207] group-hover:text-white">2</span>
+                    <div class="w-24 h-24 mx-auto bg-emerald-50 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#6ef3d6] group-hover:text-white transition-all duration-300 shadow-lg shadow-emerald-100/50">
+                        <span class="text-3xl font-black text-[#6ef3d6] group-hover:text-white">2</span>
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-3">Daftar & Terlibat</h3>
                     <p class="text-gray-500 leading-relaxed">Daftarkan dirimu secara gratis. Pihak yayasan akan memverifikasi pendaftaranmu dengan cepat.</p>
@@ -212,11 +209,11 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                 <div class="max-w-2xl">
-                    <span class="text-[#6EC207] font-bold tracking-widest uppercase text-sm mb-2 block">Etalase Kebaikan</span>
+                    <span class="text-[#6ef3d6] font-bold tracking-widest uppercase text-sm mb-2 block">Etalase Kebaikan</span>
                     <h2 class="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight">Program Terbaru</h2>
                     <p class="text-lg text-gray-500">Kesempatanmu untuk berbagi hari ini. Pilih kegiatan dan jadilah pahlawan.</p>
                 </div>
-                <a href="{{ route('kegiatan.publik') }}" class="inline-flex items-center gap-2 font-bold text-[#4379F2] hover:text-blue-700 transition">
+                <a href="{{ route('kegiatan.publik') }}" class="inline-flex items-center gap-2 font-bold text-[#0ecedb] hover:text-blue-700 transition">
                     Lihat Semua Program 
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
@@ -240,7 +237,7 @@
                                 @if($kegiatan->poster_donasi)
                                     <img src="{{ asset('storage/' . $kegiatan->poster_donasi) }}" alt="{{ $kegiatan->judul_kegiatan }}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700 ease-out">
                                 @else
-                                    <div class="w-full h-full bg-gradient-to-br from-[#4379F2] to-indigo-500 group-hover:scale-110 transition duration-700 ease-out flex items-center justify-center">
+                                    <div class="w-full h-full bg-gradient-to-br from-[#0ecedb] to-indigo-500 group-hover:scale-110 transition duration-700 ease-out flex items-center justify-center">
                                         <svg class="w-16 h-16 text-white/20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg>
                                     </div>
                                 @endif
@@ -256,10 +253,10 @@
 
                             <!-- Content -->
                             <div class="p-6 flex-grow flex flex-col bg-white">
-                                <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2 leading-snug group-hover:text-[#4379F2] transition-colors">{{ $kegiatan->judul_kegiatan }}</h3>
+                                <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2 leading-snug group-hover:text-[#0ecedb] transition-colors">{{ $kegiatan->judul_kegiatan }}</h3>
                                 
                                 <div class="flex items-center gap-2 mb-4">
-                                    <div class="w-5 h-5 rounded-full bg-blue-50 text-[#4379F2] flex items-center justify-center font-bold text-[10px] border border-blue-100">
+                                    <div class="w-5 h-5 rounded-full bg-blue-50 text-[#0ecedb] flex items-center justify-center font-bold text-[10px] border border-blue-100">
                                         {{ substr($kegiatan->koordinator->name ?? 'A', 0, 1) }}
                                     </div>
                                     <span class="text-xs font-semibold text-gray-500">{{ $kegiatan->koordinator->name ?? 'Anonim' }}</span>
@@ -283,9 +280,9 @@
                                 <div class="pt-5 border-t border-gray-100/80 flex items-center justify-between mt-auto">
                                     <div>
                                         <span class="block text-gray-400 text-[10px] uppercase font-bold tracking-wider mb-1">Dibutuhkan</span>
-                                        <span class="font-bold text-[#6EC207] bg-emerald-50 px-2 py-1 rounded-md text-sm">{{ $kegiatan->kuota_relawan }} Relawan</span>
+                                        <span class="font-bold text-[#6ef3d6] bg-emerald-50 px-2 py-1 rounded-md text-sm">{{ $kegiatan->kuota_relawan }} Relawan</span>
                                     </div>
-                                    <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#4379F2] group-hover:text-white transition-colors duration-300">
+                                    <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-[#0ecedb] group-hover:text-white transition-colors duration-300">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                     </div>
                                 </div>
@@ -324,7 +321,7 @@
                                 </div>
                             @endif
                             <div class="p-4">
-                                <h4 class="font-bold text-lg text-gray-900 mb-1 group-hover:text-[#4379F2] transition-colors">{{ $k->judul_kegiatan }}</h4>
+                                <h4 class="font-bold text-lg text-gray-900 mb-1 group-hover:text-[#0ecedb] transition-colors">{{ $k->judul_kegiatan }}</h4>
                                 <p class="text-sm text-gray-500">{{ \Illuminate\Support\Str::limit($k->deskripsi, 120) }}</p>
                                 <div class="mt-3 text-sm text-gray-600">
                                     <span class="font-semibold">Tanggal:</span> {{ \Carbon\Carbon::parse($k->tanggal_kegiatan)->translatedFormat('d M Y') }}
@@ -360,7 +357,7 @@
     <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="col-span-1 md:col-span-2">
-                <span class="font-extrabold text-2xl tracking-tight text-white mb-4 block">Aksi<span class="text-[#6EC207]">Baik</span></span>
+                <span class="font-extrabold text-2xl tracking-tight text-white mb-4 block">Aksi<span class="text-[#6ef3d6]">Baik</span></span>
                 <p class="text-sm max-w-md text-gray-500 leading-relaxed mx-auto md:mx-0">
                     Platform gotong royong yang mempertemukan relawan, donatur, dan program kemanusiaan untuk membangun Indonesia yang lebih baik, satu aksi pada satu waktu.
                 </p>

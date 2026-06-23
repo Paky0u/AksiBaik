@@ -21,7 +21,7 @@
                             </div>
                             <h3 class="text-lg font-bold text-gray-900 mb-2">Belum Ada Donasi</h3>
                             <p class="text-gray-500 mb-6 max-w-md mx-auto">Anda belum pernah melakukan donasi. Mari mulai sebarkan kebaikan hari ini!</p>
-                            <a href="{{ route('kegiatan.publik') }}" class="inline-flex items-center px-6 py-3 bg-[#4379F2] hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                            <a href="{{ route('kegiatan.publik') }}" class="inline-flex items-center px-6 py-3 bg-[#0ecedb] hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                                 Lihat Program Kebaikan
                             </a>
                         </div>
@@ -45,7 +45,7 @@
                                             </td>
                                             <td class="px-6 py-5">
                                                 <div class="text-sm font-bold text-gray-900 mb-1">
-                                                    <a href="{{ route('kegiatan.show', $donasi->id_kegiatan) }}" class="hover:text-[#4379F2] transition-colors">
+                                                    <a href="{{ route('kegiatan.show', $donasi->id_kegiatan) }}" class="hover:text-[#0ecedb] transition-colors">
                                                         {{ \Illuminate\Support\Str::limit($donasi->kegiatanSosial->judul_kegiatan ?? 'Kegiatan Tidak Diketahui', 50) }}
                                                     </a>
                                                 </div>

@@ -24,7 +24,7 @@
         .input-premium:focus {
             background: white;
             outline: none;
-            border-color: #4379F2;
+            border-color: #0ecedb;
             box-shadow: 0 0 0 4px rgba(67, 121, 242, 0.1);
         }
     </style>

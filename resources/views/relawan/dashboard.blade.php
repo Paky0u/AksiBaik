@@ -38,7 +38,7 @@
             <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight">
                 {{ __('Beranda Relawan') }}
             </h2>
-            <a href="{{ route('home') }}" class="group flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#4379F2] to-blue-600 text-white text-sm font-semibold rounded-full shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 hover:-translate-y-0.5">
+            <a href="{{ route('home') }}" class="group flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#0ecedb] to-blue-600 text-white text-sm font-semibold rounded-full shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 hover:-translate-y-0.5">
                 <svg class="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 Cari Kegiatan Lain
             </a>
@@ -74,9 +74,9 @@
                 <div class="absolute -right-20 -top-20 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none"></div>
                 
                 <div class="relative z-10 md:w-2/3">
-                    <span class="inline-block py-1.5 px-4 rounded-full bg-white/80 backdrop-blur-sm text-[#4379F2] text-xs font-bold uppercase tracking-widest mb-6 shadow-sm border border-blue-100">Ruang Kebaikan Anda</span>
+                    <span class="inline-block py-1.5 px-4 rounded-full bg-white/80 backdrop-blur-sm text-[#0ecedb] text-xs font-bold uppercase tracking-widest mb-6 shadow-sm border border-blue-100">Ruang Kebaikan Anda</span>
                     <h3 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 leading-tight tracking-tight">
-                        Halo, <span class="bg-gradient-to-r from-[#4379F2] to-indigo-500 text-gradient">{{ Auth::user()->name }}!</span> 
+                        Halo, <span class="bg-gradient-to-r from-[#0ecedb] to-indigo-500 text-gradient">{{ Auth::user()->name }}!</span> 
                     </h3>
                     <p class="text-gray-500 text-lg mb-10 max-w-xl leading-relaxed">
                         Setiap langkah kecilmu membawa perubahan besar. Lacak kontribusimu, bersiap untuk aksi selanjutnya, dan teruslah menjadi pahlawan bagi mereka yang membutuhkan.
@@ -91,7 +91,7 @@
                     <!-- Stats Row -->
                     <div class="flex flex-wrap gap-5">
                         <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-5 flex items-center gap-5 shadow-sm border border-white/80 min-w-[180px] hover:-translate-y-1.5 transition-transform duration-300">
-                            <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-[#4379F2] border border-blue-100/50">
+                            <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center text-[#0ecedb] border border-blue-100/50">
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                             </div>
                             <div>
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-5 flex items-center gap-5 shadow-sm border border-white/80 min-w-[180px] hover:-translate-y-1.5 transition-transform duration-300">
-                            <div class="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center text-[#6EC207] border border-emerald-100/50">
+                            <div class="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center text-[#6ef3d6] border border-emerald-100/50">
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
                             <div>

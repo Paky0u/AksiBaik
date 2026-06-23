@@ -1,7 +1,7 @@
 <section>
     <header class="mb-6 border-b border-gray-100 pb-4">
         <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
-            <svg class="w-5 h-5 text-[#4379F2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+            <svg class="w-5 h-5 text-[#0ecedb]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
             Informasi Pribadi
         </h2>
         <p class="mt-1 text-sm text-gray-500">
@@ -51,7 +51,7 @@
         </div>
 
         <div class="flex items-center gap-4 pt-4">
-            <button type="submit" class="px-6 py-2.5 bg-[#4379F2] hover:bg-blue-700 text-white text-sm font-bold rounded-xl shadow-md transition duration-150 transform hover:-translate-y-0.5">
+            <button type="submit" class="px-6 py-2.5 bg-[#0ecedb] hover:bg-blue-700 text-white text-sm font-bold rounded-xl shadow-md transition duration-150 transform hover:-translate-y-0.5">
                 Simpan Perubahan
             </button>
 

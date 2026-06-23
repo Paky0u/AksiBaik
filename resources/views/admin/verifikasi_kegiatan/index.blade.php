@@ -26,7 +26,7 @@
                         
                         <!-- Filter Status -->
                         <form method="GET" action="{{ route('admin.verifikasi.kegiatan.index') }}" class="w-full sm:w-auto flex items-center gap-2">
-                            <select name="status" onchange="this.form.submit()" class="w-full sm:w-48 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 focus:ring-4 focus:ring-blue-50 focus:border-[#4379F2]">
+                            <select name="status" onchange="this.form.submit()" class="w-full sm:w-48 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 focus:ring-4 focus:ring-blue-50 focus:border-[#0ecedb]">
                                 <option value="">Semua Status</option>
                                 <option value="Menunggu" {{ request('status') == 'Menunggu' ? 'selected' : '' }}>Menunggu Persetujuan</option>
                                 <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>

@@ -25,7 +25,7 @@
             <h2 class="font-extrabold text-2xl text-gray-900 tracking-tight">
                 {{ __('Kelola Program Sosial') }}
             </h2>
-            <a href="{{ route('koordinator.kegiatan.create') }}" class="group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#6EC207] to-emerald-600 text-white text-sm font-bold rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all duration-300">
+            <a href="{{ route('koordinator.kegiatan.create') }}" class="group inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#6ef3d6] to-emerald-600 text-white text-sm font-bold rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all duration-300">
                 <svg class="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
                 Buat Program Baru
             </a>
@@ -40,9 +40,9 @@
         <div class="relative pt-8 max-w-7xl mx-auto sm:px-6 lg:px-8 z-10">
 
             @if (session('success'))
-                <div class="mb-8 p-4 glass-card border-l-4 border-[#6EC207] rounded-2xl shadow-sm flex items-start gap-4">
+                <div class="mb-8 p-4 glass-card border-l-4 border-[#6ef3d6] rounded-2xl shadow-sm flex items-start gap-4">
                     <div class="p-2 bg-emerald-100 rounded-full">
-                        <svg class="w-6 h-6 text-[#6EC207]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg class="w-6 h-6 text-[#6ef3d6]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <div>
                         <span class="font-bold text-gray-800">Berhasil!</span>
@@ -56,7 +56,7 @@
                 <div class="absolute inset-y-0 right-0 w-1/2 bg-gradient-to-l from-emerald-50/50 to-transparent pointer-events-none"></div>
                 
                 <div class="relative z-10">
-                    <div class="w-12 h-12 bg-[#6EC207]/10 text-[#6EC207] rounded-2xl flex items-center justify-center mb-4 border border-[#6EC207]/20">
+                    <div class="w-12 h-12 bg-[#6ef3d6]/10 text-[#6ef3d6] rounded-2xl flex items-center justify-center mb-4 border border-[#6ef3d6]/20">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     </div>
                     <h3 class="text-2xl font-extrabold text-gray-900 mb-2">Daftar Program Sosial Anda</h3>
@@ -65,7 +65,7 @@
                 
                 <div class="relative z-10 flex flex-col sm:flex-row gap-4 shrink-0">
                     <div class="bg-white/80 backdrop-blur-sm px-6 py-4 rounded-2xl border border-white shadow-sm flex items-center gap-4">
-                        <div class="w-10 h-10 bg-blue-100 text-[#4379F2] rounded-full flex items-center justify-center">
+                        <div class="w-10 h-10 bg-blue-100 text-[#0ecedb] rounded-full flex items-center justify-center">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
                         </div>
                         <div>
@@ -79,7 +79,7 @@
                         </div>
                         <div>
                             <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-0.5">Aktif Berjalan</p>
-                            <p class="text-2xl font-black text-[#6EC207]">{{ $kegiatans->where('status_kegiatan', 'Aktif')->count() }}</p>
+                            <p class="text-2xl font-black text-[#6ef3d6]">{{ $kegiatans->where('status_kegiatan', 'Aktif')->count() }}</p>
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                                     <td class="py-5 px-6 text-center">
                                         @if ($kegiatan->status_kegiatan === 'Aktif')
                                             <span class="inline-flex items-center px-3 py-1.5 bg-emerald-50 text-[#117554] text-xs font-bold rounded-full border border-emerald-100 shadow-sm">
-                                                <span class="w-2 h-2 rounded-full bg-[#6EC207] me-2 animate-pulse"></span>
+                                                <span class="w-2 h-2 rounded-full bg-[#6ef3d6] me-2 animate-pulse"></span>
                                                 Berjalan
                                             </span>
                                         @elseif ($kegiatan->status_kegiatan === 'Selesai')
@@ -149,7 +149,7 @@
                                     
                                     <td class="py-5 px-6">
                                         <div class="flex items-center justify-center gap-2">
-                                            <a href="{{ route('koordinator.kegiatan.edit', $kegiatan->id_kegiatan) }}" class="p-2.5 bg-blue-50 text-[#4379F2] hover:bg-[#4379F2] hover:text-white rounded-xl transition-all shadow-sm border border-blue-100 hover:shadow-md hover:-translate-y-0.5" title="Edit Kegiatan">
+                                            <a href="{{ route('koordinator.kegiatan.edit', $kegiatan->id_kegiatan) }}" class="p-2.5 bg-blue-50 text-[#0ecedb] hover:bg-[#0ecedb] hover:text-white rounded-xl transition-all shadow-sm border border-blue-100 hover:shadow-md hover:-translate-y-0.5" title="Edit Kegiatan">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                             </a>
 
@@ -171,7 +171,7 @@
                                         </div>
                                         <h4 class="text-xl font-bold text-gray-800 mb-2">Belum Ada Program</h4>
                                         <p class="text-gray-500 max-w-sm mx-auto mb-6">Mulai sebarkan kebaikan dengan membuat program sosial pertama Anda. Kami tidak sabar melihat inisiatif Anda!</p>
-                                        <a href="{{ route('koordinator.kegiatan.create') }}" class="inline-flex items-center px-6 py-2.5 bg-[#6EC207] hover:bg-emerald-600 text-white font-bold rounded-full shadow-lg transition">
+                                        <a href="{{ route('koordinator.kegiatan.create') }}" class="inline-flex items-center px-6 py-2.5 bg-[#6ef3d6] hover:bg-emerald-600 text-white font-bold rounded-full shadow-lg transition">
                                             Buat Program Sekarang
                                         </a>
                                     </td>

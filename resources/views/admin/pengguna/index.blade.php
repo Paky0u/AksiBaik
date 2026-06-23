@@ -33,7 +33,7 @@
                         
                         <!-- Filter Role -->
                         <form method="GET" action="{{ route('admin.pengguna.index') }}" class="w-full sm:w-auto flex items-center gap-2">
-                            <select name="role" onchange="this.form.submit()" class="w-full sm:w-48 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 focus:ring-4 focus:ring-blue-50 focus:border-[#4379F2]">
+                            <select name="role" onchange="this.form.submit()" class="w-full sm:w-48 px-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 focus:ring-4 focus:ring-blue-50 focus:border-[#0ecedb]">
                                 <option value="">Semua Peran</option>
                                 <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                                 <option value="koordinator" {{ request('role') == 'koordinator' ? 'selected' : '' }}>Koordinator</option>
@@ -81,7 +81,7 @@
                                                 @elseif($pengguna->role === 'koordinator')
                                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">Koordinator</span>
                                                 @else
-                                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-[#4379F2] border border-blue-200">Relawan</span>
+                                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-[#0ecedb] border border-blue-200">Relawan</span>
                                                 @endif
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -89,7 +89,7 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <div class="flex items-center justify-end gap-2">
-                                                    <a href="{{ route('admin.pengguna.edit', $pengguna->id) }}" class="p-2 bg-blue-50 text-blue-600 hover:bg-[#4379F2] hover:text-white rounded-lg transition-colors shadow-sm border border-blue-100" title="Edit Profil/Peran">
+                                                    <a href="{{ route('admin.pengguna.edit', $pengguna->id) }}" class="p-2 bg-blue-50 text-blue-600 hover:bg-[#0ecedb] hover:text-white rounded-lg transition-colors shadow-sm border border-blue-100" title="Edit Profil/Peran">
                                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                                     </a>
                                                     

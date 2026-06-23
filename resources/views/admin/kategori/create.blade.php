@@ -21,7 +21,7 @@
                         <!-- Nama Kategori -->
                         <div>
                             <label for="nama_kategori" class="block text-sm font-bold text-gray-700 mb-1">Nama Kategori <span class="text-rose-500">*</span></label>
-                            <input id="nama_kategori" type="text" name="nama_kategori" value="{{ old('nama_kategori') }}" required autofocus class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#4379F2] focus:ring-4 focus:ring-blue-50 transition-all font-semibold" placeholder="Contoh: Pendidikan, Lingkungan">
+                            <input id="nama_kategori" type="text" name="nama_kategori" value="{{ old('nama_kategori') }}" required autofocus class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#0ecedb] focus:ring-4 focus:ring-blue-50 transition-all font-semibold" placeholder="Contoh: Pendidikan, Lingkungan">
                             @error('nama_kategori')
                                 <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
                             @enderror
@@ -30,7 +30,7 @@
                         <!-- Deskripsi -->
                         <div>
                             <label for="deskripsi" class="block text-sm font-bold text-gray-700 mb-1">Deskripsi <span class="text-gray-400 font-normal">(Opsional)</span></label>
-                            <textarea id="deskripsi" name="deskripsi" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#4379F2] focus:ring-4 focus:ring-blue-50 transition-all text-gray-600" placeholder="Berikan penjelasan singkat mengenai kategori ini...">{{ old('deskripsi') }}</textarea>
+                            <textarea id="deskripsi" name="deskripsi" rows="4" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#0ecedb] focus:ring-4 focus:ring-blue-50 transition-all text-gray-600" placeholder="Berikan penjelasan singkat mengenai kategori ini...">{{ old('deskripsi') }}</textarea>
                             @error('deskripsi')
                                 <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
                             @enderror
@@ -40,7 +40,7 @@
                             <a href="{{ route('admin.kategori.index') }}" class="px-6 py-3 rounded-xl text-gray-600 font-bold hover:bg-gray-100 transition-colors">
                                 Batal
                             </a>
-                            <button type="submit" class="px-8 py-3 bg-gradient-to-r from-[#4379F2] to-blue-600 text-white font-extrabold rounded-xl shadow-lg shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-200">
+                            <button type="submit" class="px-8 py-3 bg-gradient-to-r from-[#0ecedb] to-blue-600 text-white font-extrabold rounded-xl shadow-lg shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-200">
                                 Simpan Kategori
                             </button>
                         </div>

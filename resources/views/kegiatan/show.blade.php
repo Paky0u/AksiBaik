@@ -40,21 +40,21 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <div class="w-10 h-10 bg-gradient-to-br from-[#4379F2] to-[#6EC207] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:rotate-12 transition-transform duration-300">
+                    <div class="w-10 h-10 bg-gradient-to-br from-[#0ecedb] to-[#6ef3d6] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:rotate-12 transition-transform duration-300">
                         AB
                     </div>
-                    <span class="font-extrabold text-2xl tracking-tight text-gray-900 group-hover:text-[#4379F2] transition-colors">Aksi<span class="text-[#6EC207]">Baik</span></span>
+                    <span class="font-extrabold text-2xl tracking-tight text-gray-900 group-hover:text-[#0ecedb] transition-colors">Aksi<span class="text-[#6ef3d6]">Baik</span></span>
                 </a>
                 
                 <div>
                     @if (Route::has('login'))
                         <div class="flex items-center gap-6">
                             @auth
-                                <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-gray-600 hover:text-[#4379F2] transition">Ke Dasbor</a>
+                                <a href="{{ url('/dashboard') }}" class="text-sm font-bold text-gray-600 hover:text-[#0ecedb] transition">Ke Dasbor</a>
                             @else
-                                <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600 hover:text-[#4379F2] transition relative group hidden sm:block">
+                                <a href="{{ route('login') }}" class="text-sm font-bold text-gray-600 hover:text-[#0ecedb] transition relative group hidden sm:block">
                                     Masuk
-                                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#4379F2] transition-all group-hover:w-full"></span>
+                                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#0ecedb] transition-all group-hover:w-full"></span>
                                 </a>
                                 @if (Route::has('register'))
                                     <a href="{{ route('register') }}" class="px-6 py-2.5 bg-gray-900 hover:bg-gray-800 text-white text-sm font-bold rounded-full shadow-xl shadow-gray-900/20 hover:-translate-y-0.5 transition-all duration-300">
@@ -78,7 +78,7 @@
 
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             
-            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm text-sm font-bold text-gray-600 hover:text-[#4379F2] mb-8 hover:-translate-x-1 transition-all">
+            <a href="{{ route('home') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm text-sm font-bold text-gray-600 hover:text-[#0ecedb] mb-8 hover:-translate-x-1 transition-all">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                 Kembali ke Eksplorasi
             </a>
@@ -94,7 +94,7 @@
                         <!-- Main Image -->
                         <img src="{{ asset('storage/' . $kegiatan->poster_donasi) }}" alt="{{ $kegiatan->judul_kegiatan }}" class="absolute inset-0 w-full h-full object-contain transform group-hover:scale-105 transition duration-700 relative z-10 drop-shadow-2xl">
                     @else
-                        <div class="absolute inset-0 bg-gradient-to-br from-[#4379F2] to-indigo-600 flex flex-col items-center justify-center text-white/50">
+                        <div class="absolute inset-0 bg-gradient-to-br from-[#0ecedb] to-indigo-600 flex flex-col items-center justify-center text-white/50">
                             <svg class="w-24 h-24 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
                     @endif
@@ -119,7 +119,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
                         <!-- Tanggal -->
                         <div class="bg-gray-50/80 rounded-3xl p-6 flex items-start gap-5 border border-gray-100 hover:bg-blue-50/50 transition duration-300 group">
-                            <div class="w-14 h-14 rounded-2xl bg-white text-[#4379F2] flex items-center justify-center shrink-0 shadow-sm border border-blue-100/50 group-hover:scale-110 transition-transform">
+                            <div class="w-14 h-14 rounded-2xl bg-white text-[#0ecedb] flex items-center justify-center shrink-0 shadow-sm border border-blue-100/50 group-hover:scale-110 transition-transform">
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             </div>
                             <div>
@@ -131,7 +131,7 @@
 
                         <!-- Lokasi -->
                         <div class="bg-gray-50/80 rounded-3xl p-6 flex items-start gap-5 border border-gray-100 hover:bg-emerald-50/50 transition duration-300 group">
-                            <div class="w-14 h-14 rounded-2xl bg-white text-[#6EC207] flex items-center justify-center shrink-0 shadow-sm border border-emerald-100/50 group-hover:scale-110 transition-transform">
+                            <div class="w-14 h-14 rounded-2xl bg-white text-[#6ef3d6] flex items-center justify-center shrink-0 shadow-sm border border-emerald-100/50 group-hover:scale-110 transition-transform">
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             </div>
                             <div>
@@ -167,7 +167,7 @@
 
                     <!-- Penyelenggara -->
                     <div class="flex items-center gap-4 p-5 mb-12 bg-white border border-gray-100 rounded-3xl shadow-sm max-w-xl hover:shadow-md transition-shadow">
-                        <div class="w-14 h-14 rounded-full bg-blue-50 text-[#4379F2] flex items-center justify-center font-bold text-xl border border-blue-100">
+                        <div class="w-14 h-14 rounded-full bg-blue-50 text-[#0ecedb] flex items-center justify-center font-bold text-xl border border-blue-100">
                             {{ substr($kegiatan->koordinator->name ?? 'A', 0, 1) }}
                         </div>
                         <div>
@@ -223,7 +223,7 @@
                                 <div class="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                                     <div class="flex items-center justify-between mb-4">
                                         <div class="flex items-center gap-3">
-                                            <div class="w-10 h-10 rounded-full bg-blue-100 text-[#4379F2] flex items-center justify-center font-bold text-lg">
+                                            <div class="w-10 h-10 rounded-full bg-blue-100 text-[#0ecedb] flex items-center justify-center font-bold text-lg">
                                                 {{ substr($ulasan->pengguna->name ?? 'R', 0, 1) }}
                                             </div>
                                             <div>
@@ -290,7 +290,7 @@
                                         @if(!$pendaftaran)
                                             <form action="{{ route('relawan.daftar', $kegiatan->id_kegiatan) }}" method="POST" class="w-full md:w-auto">
                                                 @csrf
-                                                <button type="submit" class="w-full md:w-auto px-10 py-5 bg-gradient-to-r from-[#4379F2] to-blue-600 text-white text-xl font-bold rounded-full shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group">
+                                                <button type="submit" class="w-full md:w-auto px-10 py-5 bg-gradient-to-r from-[#0ecedb] to-blue-600 text-white text-xl font-bold rounded-full shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group">
                                                     Daftar Sebagai Relawan
                                                     <svg class="w-6 h-6 ml-3 group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                                 </button>
@@ -302,7 +302,7 @@
                                         @endif
                                     @endif
                                 @else
-                                    <a href="{{ route('login') }}" class="w-full md:w-auto px-10 py-5 bg-white text-gray-800 border-2 border-gray-200 text-xl font-bold rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 hover:border-[#4379F2] transition-all duration-300 flex items-center justify-center">
+                                    <a href="{{ route('login') }}" class="w-full md:w-auto px-10 py-5 bg-white text-gray-800 border-2 border-gray-200 text-xl font-bold rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 hover:border-[#0ecedb] transition-all duration-300 flex items-center justify-center">
                                         Masuk untuk Jadi Relawan
                                     </a>
                                 @endauth
@@ -346,7 +346,7 @@
                                     <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
                                         <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                     </div>
-                                    <p class="text-sm text-gray-600 font-bold mb-1">Anda login sebagai <span class="uppercase text-[#4379F2]">{{ auth()->user()->role }}</span></p>
+                                    <p class="text-sm text-gray-600 font-bold mb-1">Anda login sebagai <span class="uppercase text-[#0ecedb]">{{ auth()->user()->role }}</span></p>
                                     <p class="text-xs text-gray-500">Pendaftaran relawan hanya terbuka untuk akun dengan peran Relawan.</p>
                                 </div>
                             @endif

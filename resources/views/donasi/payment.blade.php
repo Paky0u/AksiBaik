@@ -9,7 +9,7 @@
         <div class="text-center mb-6">
             <h2 class="text-2xl font-extrabold text-gray-900 mb-2">Pembayaran Donasi</h2>
             <p class="text-sm text-gray-500">Lanjutkan pembayaran donasi untuk kegiatan:</p>
-            <p class="text-sm font-bold text-[#4379F2] mt-1">{{ $kegiatan->judul_kegiatan ?? $kegiatan->nama_kegiatan ?? 'Kegiatan' }}</p>
+            <p class="text-sm font-bold text-[#0ecedb] mt-1">{{ $kegiatan->judul_kegiatan ?? $kegiatan->nama_kegiatan ?? 'Kegiatan' }}</p>
         </div>
 
         <div class="bg-white shadow-md rounded-xl p-6 mb-6">
@@ -26,7 +26,7 @@
         </div>
 
         <div class="space-y-4">
-            <button id="pay-button" class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-lg shadow-blue-500/30 text-sm font-extrabold text-white bg-gradient-to-r from-[#4379F2] to-blue-600 hover:to-blue-700 hover:-translate-y-0.5 transition-all duration-200">
+            <button id="pay-button" class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-lg shadow-blue-500/30 text-sm font-extrabold text-white bg-gradient-to-r from-[#0ecedb] to-blue-600 hover:to-blue-700 hover:-translate-y-0.5 transition-all duration-200">
                 Bayar Sekarang
             </button>
 

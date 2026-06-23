@@ -45,7 +45,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <label class="relative flex cursor-pointer">
                                     <input type="radio" name="role" value="relawan" class="peer sr-only" {{ old('role', $pengguna->role) == 'relawan' ? 'checked' : '' }}>
-                                    <div class="w-full text-center px-4 py-3 rounded-xl border-2 border-gray-200 bg-white/50 text-gray-600 font-bold transition-all peer-checked:border-[#4379F2] peer-checked:bg-blue-50 peer-checked:text-[#4379F2] hover:bg-gray-50">
+                                    <div class="w-full text-center px-4 py-3 rounded-xl border-2 border-gray-200 bg-white/50 text-gray-600 font-bold transition-all peer-checked:border-[#0ecedb] peer-checked:bg-blue-50 peer-checked:text-[#0ecedb] hover:bg-gray-50">
                                         Relawan
                                     </div>
                                 </label>
@@ -70,7 +70,7 @@
                         <!-- Nama -->
                         <div>
                             <label for="name" class="block text-sm font-bold text-gray-700 mb-1">Nama Lengkap <span class="text-rose-500">*</span></label>
-                            <input id="name" type="text" name="name" value="{{ old('name', $pengguna->name) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#4379F2] focus:ring-4 focus:ring-blue-50 transition-all font-semibold">
+                            <input id="name" type="text" name="name" value="{{ old('name', $pengguna->name) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#0ecedb] focus:ring-4 focus:ring-blue-50 transition-all font-semibold">
                             @error('name')
                                 <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
                             @enderror
@@ -79,7 +79,7 @@
                         <!-- Email -->
                         <div>
                             <label for="email" class="block text-sm font-bold text-gray-700 mb-1">Alamat Email <span class="text-rose-500">*</span></label>
-                            <input id="email" type="email" name="email" value="{{ old('email', $pengguna->email) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#4379F2] focus:ring-4 focus:ring-blue-50 transition-all font-semibold">
+                            <input id="email" type="email" name="email" value="{{ old('email', $pengguna->email) }}" required class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#0ecedb] focus:ring-4 focus:ring-blue-50 transition-all font-semibold">
                             @error('email')
                                 <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
                             @enderror
@@ -88,7 +88,7 @@
                         <!-- Telepon -->
                         <div>
                             <label for="telepon" class="block text-sm font-bold text-gray-700 mb-1">Nomor Telepon/WhatsApp <span class="text-gray-400 font-normal">(Opsional)</span></label>
-                            <input id="telepon" type="text" name="telepon" value="{{ old('telepon', $pengguna->telepon) }}" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#4379F2] focus:ring-4 focus:ring-blue-50 transition-all font-semibold">
+                            <input id="telepon" type="text" name="telepon" value="{{ old('telepon', $pengguna->telepon) }}" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white/50 focus:bg-white focus:border-[#0ecedb] focus:ring-4 focus:ring-blue-50 transition-all font-semibold">
                             @error('telepon')
                                 <p class="mt-2 text-sm text-red-600 font-semibold">{{ $message }}</p>
                             @enderror
